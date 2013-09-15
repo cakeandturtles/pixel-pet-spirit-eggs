@@ -1,3 +1,4 @@
 http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
 
-1. Begin building mockup for My Pets (copy from prev android app and notebook)
+1. Transfer content of mainBody to a seperate php file to be able to start dynamically building the content.
+	-Include in the jscript for it stylistic functionality for the pet tab buttons

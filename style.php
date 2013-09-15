@@ -17,6 +17,7 @@ body{
 	font-size: 10px;
 	font-weight: bold;
 	text-align: center;
+	cursor:pointer;
 	
 	margin-right:10px;
 	margin-bottom:10px;
@@ -33,15 +34,42 @@ body{
 	background: #dddddd;
 	width: 540px;
 	height: 480px;
+	text-align:center;
 	
 	/*border-style:solid;
 	border-width:1px;
 	border-color:#000000;*/
 }
+#mainBody{
+	padding: 10px;
+}
 #footer{
 	font-size: 12px;
 	float: right;
 	margin-top:5px;
+}
+.actionButton{
+	background: #ffffff;
+	font-size:14px;
+	float:left;
+	cursor:pointer;
+	
+	padding: 10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	margin: 10px;
+	
+	outline: 1px solid black;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.actionButton:hover{
+	outline: 2px solid black;
 }
 .clearer{
 	clear:both;
