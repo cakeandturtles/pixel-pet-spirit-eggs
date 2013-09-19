@@ -1,4 +1,6 @@
 http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
-
-1. Transfer content of mainBody to a seperate php file to be able to start dynamically building the content.
-	-Include in the jscript for it stylistic functionality for the pet tab buttons
+		
+1. Flesh out PixelPet Object:: PetForm enum and var, description, Lvl
+2. Make pets hatch after time
+	-Make action buttons do things?? (Personality Attributes on pixelpet?)
+3. Redraw midform pets to be a bigger size...

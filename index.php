@@ -2,9 +2,27 @@
 <html>
 	<head>
 		<title>Pixel Pets!</title>
-		<link href="style.php" rel="stylesheet" type="text/css">
-		<script language="javascript" type="text/javascript" src="styleControl.js"></script>
-		<script language="javascript" type="text/javascript" src="PixelPet.js"></script>
+		<link href="pixelPets/style.php" rel="stylesheet" type="text/css">
+		<!--Declaration of PixelPet class-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PixelPet.js"></script>
+		<!--Declaration of various pet Objects-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Puglett.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Chloropillar.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Flutterpod.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Lunactulus.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Tadpox.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Fledgwing.js"></script>
+		
+		<!--Contains HTML information and specific var/scripts for My Pets Tab-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/MyPetsTab.js"></script>
+		<!--Contains HTML information and specific var/scripts for Trainer Tab-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/TrainerTab.js"></script>
+		<!--Controls theme and associated font/background. Includes whiteout of selected Nav Button-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/styleControl.js"></script>
+		<!--Various functions for initiating each tab, calls the above Tab scripts-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navControl.js"></script>
+		<!--Initialize global variables and start application-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/main.js"></script>
 	</head>
 	<body>
 		<br/><br/>
@@ -17,43 +35,15 @@
 				<div id="gardenButton" class="navButton" onclick="gotoGarden();">GARDEN</div>
 				<div id="codexButton" class="navButton"  onclick="gotoCodex();">CODEX</div>
 			</div>
-			<div id="main"><div id="mainBody">
-				<div class="navButton" style="background:#ffffff; float:left;padding-left:20px;padding-right:20px;">PET 1</div>
-				<div class="navButton" style="float:left;padding-left:20px;padding-right:20px;">PET 2</div>
-				<div class="navButton" style="float:left;padding-left:20px;padding-right:20px;">PET 3</div>
-				<div class="navButton" style="float:left;padding-left:20px;padding-right:20px;">PET 4</div>
-				<div class="clearer"></div><br/>
-				<div style="float:left;">??? the Mysterious Egg</div>
-				<div style="float:right;">Lvl. ???</div>
-				<div class="clearer"></div>
-				<br/>
-				<div style="width:128px; height:128px; background:#ffffff; border-style:solid; border-width:1px; border-color:#000000; margin:0px auto;">
-					<div id="petImage" style="width:128px; height:128px; background:url(eggs_and_pets_big.png);"></div>
-				</div>
-				<br/>
-				<div id="petDescription">It moves around a lot.<br/>It must be close to hatching!</div>
-				<br/>
-				<div style="display: inline-block;">
-					<div class="actionButton">Rub Egg</div>
-					<div class="actionButton">Shake Egg</div>
-					<div class="actionButton">Talk to Egg</div>
-				</div>
-				
-				<script type="text/javascript">					
-					pet = new PixelPet();
-					pet.UpdateAnimation();
-					var game = setInterval(function(){main()},750);
-	
-					var main = function(){
-						pet.UpdateAnimation();
-					};
-				</script>
-				
+			<div id="ppMain"><div id="mainBody">				
 			</div></div>
 			<div class="clearer"></div>
 			<div id="footer">
 				Made by Jake Trower
 			</div>
+		</div>
+		<div id="backToCakeandturtles">
+			<a href="index.php">&lt;&lt; Back to cakeandturtles</a>
 		</div>
 		<div id="themeSelector">
 			<div style="float:left;">Theme: </div>
