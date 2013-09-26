@@ -1,57 +1,56 @@
+var NavButtonEnum = {
+	MY_PETS: "myPets", INVENTORY: "inventory", GARDEN: "garden", CODEX: "codex"
+};
+
 var gotoMyPets = function(){
 	stopTabSpecificScripts();
-	selectedNav = "myPets";
+	selectedNav = NavButtonEnum.MY_PETS;
 	
 	document.getElementById("mainBody").innerHTML = myPetsTabHTML;
 	myPetsTabScriptBegin();
 	setTheme();
 };
 
-var gotoTrainer = function(){
-	stopTabSpecificScripts();
-	selectedNav = "trainer";
-	
-	document.getElementById("mainBody").innerHTML = trainerTabHTML;
-	trainerTabScriptBegin();
-	setTheme();
-};
-
 var gotoInventory = function(){
 	stopTabSpecificScripts();
-	selectedNav = "inventory";
+	selectedNav = NavButtonEnum.INVENTORY;
 	
+	document.getElementById("mainBody").innerHTML = inventoryTabHTML;
+	inventoryTabScriptBegin();
 	setTheme();
 };
 
 var gotoGarden = function(){
 	stopTabSpecificScripts();
-	selectedNav = "garden";
+	selectedNav = NavButtonEnum.GARDEN;
 	
+	document.getElementById("mainBody").innerHTML = gardenTabHTML;
+	gardenTabScriptBegin();
 	setTheme();
 };
 
 var gotoCodex = function(){
 	stopTabSpecificScripts();
-	selectedNav = "codex";
+	selectedNav = NavButtonEnum.CODEX;
 	
+	document.getElementById("mainBody").innerHTML = codexTabHTML;
+	codexTabScriptBegin();
 	setTheme();
 };
 
 var stopTabSpecificScripts = function(){
 	switch(selectedNav){
-		case "myPets":
+		case NavButtonEnum.MY_PETS:
 			myPetsTabScriptEnd();
 			break;
-		case "trainer":
-			trainerTabScriptEnd();
+		case NavButtonEnum.INVENTORY:
+			inventoryTabScriptEnd();
 			break;
-		case "inventory":
-			
+		case NavButtonEnum.GARDEN:
+			gardenTabScriptEnd();
 			break;
-		case "garden":
-			
-			break;
-		case "codex":
+		case NavButtonEnum.CODEX:
+			codexTabScriptEnd();
 			break;
 		default: break;
 	}

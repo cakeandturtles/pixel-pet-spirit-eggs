@@ -2,21 +2,16 @@
 <html>
 	<head>
 		<title>Pixel Pets!</title>
-		<link href="pixelPets/style.php" rel="stylesheet" type="text/css">
-		<!--Declaration of PixelPet class-->
+		<link href="pixelPets/pixelPetStyle.css" rel="stylesheet" type="text/css">
+		<!--Declaration of PixelPet class and species-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PixelPet.js"></script>
-		<!--Declaration of various pet Objects-->
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Puglett.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Chloropillar.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Flutterpod.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Lunactulus.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Tadpox.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Fledgwing.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PetSpecies.js"></script>
 		
-		<!--Contains HTML information and specific var/scripts for My Pets Tab-->
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/MyPetsTab.js"></script>
-		<!--Contains HTML information and specific var/scripts for Trainer Tab-->
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/TrainerTab.js"></script>
+		<!--Contains HTML information and specific var/scripts for Navigation Tabs-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/MyPetsTab.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/InventoryTab.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/GardenTab.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/CodexTab.js"></script>
 		<!--Controls theme and associated font/background. Includes whiteout of selected Nav Button-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/styleControl.js"></script>
 		<!--Various functions for initiating each tab, calls the above Tab scripts-->
@@ -30,7 +25,6 @@
 			<div id="navigation">
 				<br/>
 				<div id="myPetsButton" class="navButton" onclick="gotoMyPets();">MY PETS</div>
-				<div id="trainerButton" class="navButton" onclick="gotoTrainer();">TRAINER</div>
 				<div id="inventoryButton" class="navButton" onclick="gotoInventory();">INVENTORY</div>
 				<div id="gardenButton" class="navButton" onclick="gotoGarden();">GARDEN</div>
 				<div id="codexButton" class="navButton"  onclick="gotoCodex();">CODEX</div>
@@ -39,9 +33,23 @@
 			</div></div>
 			<div class="clearer"></div>
 			<div id="footer">
-				Made by Jake Trower
+				Programmed by Jake Trower<br/>
+				Images/Digimon made by Bandai
 			</div>
 		</div>
+		
+		<div id="overlay">
+		</div>
+		<div id="overlay2">
+			<div id="notification">
+				<a id="closeNote" href='javascript:closeNotification()'>X</a>
+				<div id="notificationBody">
+					<p>Content you want the user to see goes here.</p>
+					<a href="javascript:close()">Close</a>
+				</div>
+			</div>
+		</div>
+		
 		<div id="backToCakeandturtles">
 			<a href="index.php">&lt;&lt; Back to cakeandturtles</a>
 		</div>

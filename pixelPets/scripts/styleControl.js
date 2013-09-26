@@ -12,6 +12,23 @@ var setNavButton = function(navName){
 	document.getElementById(navName + "Button").style.background = "#ffffff";
 	document.getElementById(navName + "Button").style.color = "#000000";
 };
+var updateNavButtonVisibility = function(){
+	if (hasInventory)
+		document.getElementById("inventoryButton").style.visibility = "visible";
+	else document.getElementById("inventoryButton").style.visibility = "hidden";
+	
+	if (hasGarden)
+		document.getElementById("gardenButton").style.visibility = "visible";
+	else document.getElementById("gardenButton").style.visibility = "hidden";
+	
+	if (hasCodex)
+		document.getElementById("codexButton").style.visibility = "visible";
+	else document.getElementById("codexButton").style.visibility = "hidden";
+	
+	if (!hasInventory && !hasGarden && !hasCodex)
+		document.getElementById("myPetsButton").style.visibility = "hidden";
+	else document.getElementById("myPetsButton").style.visibility = "visible";
+};
 
 //THEME CONTROL/////////////////////////////////////////////////////////////////////////////////////
 var darkColor = "#aaaaaa";

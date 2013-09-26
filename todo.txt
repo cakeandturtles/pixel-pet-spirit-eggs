@@ -1,6 +1,5 @@
 http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
 		
-1. Flesh out PixelPet Object:: PetForm enum and var, description, Lvl
-2. Make pets hatch after time
-	-Make action buttons do things?? (Personality Attributes on pixelpet?)
-3. Redraw midform pets to be a bigger size...
+1. Add garden with ability to Scavenge for food/pick fruit???
+2. Action buttons feel a little effete...
+	-Animations for different buttons?
