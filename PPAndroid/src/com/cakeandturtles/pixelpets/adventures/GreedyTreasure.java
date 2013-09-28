@@ -1,11 +1,6 @@
 package com.cakeandturtles.pixelpets.adventures;
 
 import com.cakeandturtles.pixelpets.items.PetItem;
-import com.cakeandturtles.pixelpets.items.battle.GhostPuppet;
-import com.cakeandturtles.pixelpets.items.battle.Substitute;
-import com.cakeandturtles.pixelpets.items.medicine.Ether;
-import com.cakeandturtles.pixelpets.items.medicine.PhoenixDown;
-import com.cakeandturtles.pixelpets.items.medicine.RedPotion;
 import com.cakeandturtles.pixelpets.pets.PixelPet;
 
 public class GreedyTreasure extends Adventure{
@@ -27,7 +22,7 @@ public class GreedyTreasure extends Adventure{
 		
 		Option3 = new AdventureOption("Search area", questPet.GetScaledExp(8), RelAniX, RelAniY);
 		Option3.Result = activePet.Name + " searches the area and finds a mysterious glowing rock. It shouts, \"Put me down!\" but you take it with you anyway.";
-		Option3.ResultingItems = new PetItem[]{ new RedPotion(4), new Ether(3), new Substitute(3), new GhostPuppet(3), new PhoenixDown(3) };
+		Option3.ResultingItems = new PetItem[]{ };
 		Option3.EmpathyModifier = 5;
 		
 		Option4 = new AdventureOption("Run away", 0, RelAniX, RelAniY);

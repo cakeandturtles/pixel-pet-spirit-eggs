@@ -1,12 +1,6 @@
 package com.cakeandturtles.pixelpets;
 
-import com.cakeandturtles.pixelpets.managers.AreaManager;
-import com.cakeandturtles.pixelpets.pets.PixelPet;
-import com.example.pixelpets.R;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -19,12 +13,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.cakeandturtles.pixelpets.pets.PixelPet;
+import com.example.pixelpets.R;
 
 public class WorldMapActivity extends Activity {
 	private PPApp appState;
@@ -37,7 +34,6 @@ public class WorldMapActivity extends Activity {
 		setContentView(R.layout.activity_world_map);
 		
 		appState = ((PPApp)getApplicationContext());
-		appState.MyAdventures.InBattle = false;
 	}
 
 	@Override
@@ -52,18 +48,6 @@ public class WorldMapActivity extends Activity {
 	{
 		super.onResume();
 		UpdateMapDisplay();
-		
-		if (appState.getTempActivePet().HP <= 0){
-			boolean finish = true;
-			for (int i = 0; i < 4; i++){
-				appState.tempIndex = i;
-				if (appState.getTempActivePet() != null && appState.getTempActivePet().CurrentForm != PixelPet.PetForm.Egg && appState.getTempActivePet().HP > 0){
-					finish = false;
-					break;
-				}
-			}
-			if (finish) finish();
-		}
 		
 		runnable = new Runnable(){
 			@Override
@@ -95,54 +79,13 @@ public class WorldMapActivity extends Activity {
 	}
 	
 	private void ClickItem(final int index){
-		AreaManager manager = null;
-		if (index == 0) manager = appState.MyAdventures.LostWoods;
-		else if (index == 1) manager = appState.MyAdventures.PoisonLake;
-		else if (index == 2) manager = appState.MyAdventures.CaveMountains;
-		else if (index == 3) manager = appState.MyAdventures.WindyFields;
-		
-		if (manager.IsFairyUnlocked)
-			OpenDungeonTutorDialog(manager, index);
-		else
-			StartArea(index);
+		StartArea(index);
 	}
 	
-	private void OpenDungeonTutorDialog(AreaManager manager, final int index){
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		dialog.setTitle("Pick an option");
-		if (manager.IsFairyUnlocked){
-			dialog.setItems(new String[]{ "Adventure", "Fairy Quest"}, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface dialog, int which){
-					switch (which){
-						case 0: StartArea(index); break;
-						case 1: StartFairyQuest(index); break;
-						default: break;
-					}
-				}
-			});
-		}
-		dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-			public void onClick(DialogInterface dialog, int which){
-				dialog.cancel();
-			}
-		});
-		
-		dialog.create().show();
-	}
-	
-	private void StartArea(int index){
-		if (index != appState.MyAdventures.CurrentAreaIndex)
-			appState.MyAdventures.ConsecutiveAdventureCounter = 0;
+	private void StartArea(int index){;
 		appState.MyAdventures.CurrentAreaIndex = index;
 		Intent intent = new Intent(this, AdventureActivity.class);
 		intent.putExtra("com.cakeandturtles.pixelpets.areaIndex", index);
-		startActivity(intent);
-	}
-	
-	private void StartFairyQuest(int index){
-		Intent intent = new Intent(this, AdventureActivity.class);
-		intent.putExtra("com.cakeandturtles.pixelpets.areaIndex", index);
-		intent.putExtra("com.cakeandturtles.pixelpets.specialAdventure", "FAIRYQUEST");
 		startActivity(intent);
 	}
 	

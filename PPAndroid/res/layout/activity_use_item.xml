@@ -87,11 +87,11 @@
     				android:layout_marginRight="1dp"
     				android:background="@color/green" />
     			<TextView
-    	        	android:id="@+id/pet_hp1"
+    	        	android:id="@+id/pet_hunger1"
     	        	android:layout_width="match_parent"
     	        	android:layout_height="32dp"
+    	        	android:text="@string/pet_hunger"
     	        	android:gravity="center_horizontal"
-    	        	android:text="@string/pet_hp"
     	        	android:textSize="16sp" />
         	</RelativeLayout>
     	</RelativeLayout>
@@ -186,11 +186,11 @@
     				android:layout_marginRight="1dp"
     				android:background="@color/green" />
     			<TextView
-    	        	android:id="@+id/pet_hp2"
+    	        	android:id="@+id/pet_hunger2"
     	        	android:layout_width="match_parent"
     	        	android:layout_height="32dp"
+    	        	android:text="@string/pet_hunger"
     	        	android:gravity="center_horizontal"
-    	        	android:text="@string/pet_hp"
     	        	android:textSize="16sp" />
         	</RelativeLayout>
     	</RelativeLayout>
@@ -285,11 +285,11 @@
     				android:layout_marginRight="1dp"
     				android:background="@color/green" />
     			<TextView
-    	        	android:id="@+id/pet_hp3"
+    	        	android:id="@+id/pet_hunger3"
     	        	android:layout_width="match_parent"
     	        	android:layout_height="32dp"
+    	        	android:text="@string/pet_hunger"
     	        	android:gravity="center_horizontal"
-    	        	android:text="@string/pet_hp"
     	        	android:textSize="16sp" />
         	</RelativeLayout>
     	</RelativeLayout>
@@ -384,11 +384,11 @@
     				android:layout_marginRight="1dp"
     				android:background="@color/green" />
     			<TextView
-    	        	android:id="@+id/pet_hp4"
+    	        	android:id="@+id/pet_hunger4"
     	        	android:layout_width="match_parent"
     	        	android:layout_height="32dp"
+    	        	android:text="@string/pet_hunger"
     	        	android:gravity="center_horizontal"
-    	        	android:text="@string/pet_hp"
     	        	android:textSize="16sp" />
         	</RelativeLayout>
     	</RelativeLayout>

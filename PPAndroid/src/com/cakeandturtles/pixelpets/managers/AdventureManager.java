@@ -9,14 +9,8 @@ import com.cakeandturtles.pixelpets.adventures.Quest;
 public class AdventureManager implements Serializable{
 	private static final long serialVersionUID = -6467228156574058045L;
 
-	public boolean InBattle;
 	public int NewEggIndex;
 	public int CurrentAreaIndex;
-	public int ConsecutiveAdventureCounter;
-	public AreaManager LostWoods;
-	public AreaManager PoisonLake;
-	public AreaManager CaveMountains;
-	public AreaManager WindyFields;
 	private List<Quest> _quests;
 	public List<Quest> GetQuests(){ return _quests; }
 	public boolean AddQuest(Quest quest){
@@ -45,14 +39,8 @@ public class AdventureManager implements Serializable{
 	}
 	
 	public AdventureManager(){
-		InBattle = false;
 		NewEggIndex = -1;
 		CurrentAreaIndex = -1;
-		ConsecutiveAdventureCounter = 0;
-		LostWoods = new AreaManager("Lost Woods");
-		PoisonLake = new AreaManager("Poison Lake");
-		CaveMountains = new AreaManager("Cave Mountains");
-		WindyFields = new AreaManager("Windy Fields");
 		_quests = new ArrayList<Quest>();
 	}
 }

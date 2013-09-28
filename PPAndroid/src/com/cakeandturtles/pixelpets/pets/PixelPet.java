@@ -1,20 +1,11 @@
 package com.cakeandturtles.pixelpets.pets;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import android.graphics.Color;
 
 import com.cakeandturtles.pixelpets.PPApp;
-import com.cakeandturtles.pixelpets.attacks.Attack;
-import com.cakeandturtles.pixelpets.attacks.BattleEffect;
-import com.cakeandturtles.pixelpets.attacks.LevelAttack;
-import com.cakeandturtles.pixelpets.attacks.Struggle;
-import com.cakeandturtles.pixelpets.attacks.statuses.Berserk;
-import com.cakeandturtles.pixelpets.attacks.wild.Headbutt;
-import com.cakeandturtles.pixelpets.items.PetItem;
 import com.example.pixelpets.R;
 
 public abstract class PixelPet implements Serializable{	
@@ -57,30 +48,12 @@ public abstract class PixelPet implements Serializable{
 	public long EnergyRestoreTimer;
 	public int Hunger;
 	
-	//LEVEL UP attack List
-	public List<LevelAttack> LevelAttackList;
-	
 	//Battle Attributes	
-	public Attack[] Attacks;
 	public enum BattleType { Wild, Plant, Water, Fire, Poison, Light, Dark, Air, Earth, Insect, Ice, Glitch, None }
 	public BattleType TruePrimaryType;
 	public BattleType PrimaryType;
 	public BattleType TrueSecondaryType;
 	public BattleType SecondaryType;
-	public BattleEffect PhysicalStatus;
-	public BattleEffect MentalStatus;
-	public int BaseHP;
-	public int BaseBaseHP;
-	public int HP;
-	public int BaseSpeed;
-	public int BaseBaseSpeed;
-	public int SpeedModifier;
-	public int BaseAttack;
-	public int BaseBaseAttack;
-	public int AttackModifier;
-	public int BaseDefense;
-	public int BaseBaseDefense;
-	public int DefenseModifier;
 	
 	//Personality Attributes (Each int value from 0 to 100)
 	protected int ambition;
@@ -122,23 +95,10 @@ public abstract class PixelPet implements Serializable{
 		EnergyRestoreTimer = System.currentTimeMillis();
 		Hunger = 100;
 		
-		InitializeLevelUpAttackList();
-		Attacks = new Attack[]{ new Headbutt(), null, null, null };
 		TruePrimaryType = primaryType;
 		PrimaryType = primaryType;
 		TrueSecondaryType = secondaryType;
 		SecondaryType = secondaryType;
-		MentalStatus = null;
-		PhysicalStatus = null;
-		BaseHP = 10;
-		BaseBaseHP = BaseHP;
-		HP = BaseHP;
-		BaseSpeed = 3;
-		BaseBaseSpeed = 85;
-		BaseAttack = 3;
-		BaseBaseAttack = 85;
-		BaseDefense = 3;
-		BaseBaseDefense = 85;
 		
 		ambition = 0;
 		empathy = 0;
@@ -207,62 +167,6 @@ public abstract class PixelPet implements Serializable{
 		charm = PPApp.AppRandom.nextInt(256);
 	}
 	
-	protected void SetBattleAttributes(int hp, int speed, int attack, int defense)
-	{
-		BaseBaseHP = hp;
-		BaseBaseSpeed = speed;
-		BaseBaseAttack = attack;
-		BaseBaseDefense = defense;
-		UpdateBaseStats();
-		ResetBattleStats(true, true, true, true, true);
-	}
-	
-	protected void UpdateBaseStats()
-	{
-		BaseHP = (int)(Math.round((float)((float)insight/4.0 + BaseBaseHP + 50.0) * Level)/45.0) + 10;
-		BaseSpeed = (int)(Math.round((float)((float)ambition/4.0 + BaseBaseSpeed) * Level)/45.0) + 5;
-		BaseAttack = (int)(Math.round((float)((float)diligence/4.0 + BaseBaseAttack) * Level)/45.0) + 5;
-		BaseDefense = (int)(Math.round((float)((float)empathy/4.0 + BaseBaseDefense) * Level)/45.0) + 5;
-	}
-	
-	public void ResetBattleStats(boolean resetHP, boolean resetPP, boolean resetTypes, boolean resetMentalStatus, boolean resetPhysicalStatus){
-		if (resetHP)
-			HP = BaseHP;
-		SpeedModifier = 0;
-		AttackModifier = 0;
-		DefenseModifier = 0;
-		
-		if (resetMentalStatus){
-			MentalStatus = null;
-		}if (resetPhysicalStatus){
-			PhysicalStatus = null;
-		}
-		if (resetPP){
-			for (int i = 0; i < Attacks.length; i++){
-				if (Attacks[i] != null)
-					Attacks[i].NumUses = Attacks[i].BaseNumUses;
-			}
-		}
-		if (resetTypes){
-			PrimaryType = TruePrimaryType;
-			SecondaryType = TrueSecondaryType;
-		}
-	}
-	
-	public boolean IsEnergyFullyRestored()
-	{
-		if (HP < BaseHP)
-			return false;
-		for (int i = 0; i < 4; i++){
-			if (Attacks[i] != null){
-				if (Attacks[i].NumUses < Attacks[i].BaseNumUses){
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
 	public void RestartEnergyRestoreTimer(){
 		EnergyRestoreTimer = System.currentTimeMillis();
 	}
@@ -277,185 +181,6 @@ public abstract class PixelPet implements Serializable{
 		if (Hunger >= 25)
 			return "Pretty hungry";
 		return "Starving!";
-	}
-	
-	public void RestoreHealthAndPP(){
-		long currentTime = System.currentTimeMillis();
-		long currentDiff = currentTime - EnergyRestoreTimer;
-		long timeLimit = 20000L;
-		if (Hunger < 60) timeLimit *= 1.5;
-		if (Hunger < 50) timeLimit *= 2.0;
-		if (Hunger < 25) timeLimit *= 4.0;
-		
-		int multiplier = Math.round(currentDiff / timeLimit);
-		
-		if (!IsEnergyFullyRestored()){
-			if (multiplier >= 1){
-				Hunger -= multiplier;
-				int addend = Math.round((float)BaseHP/8) * multiplier;
-				if (addend < 1) addend = 1;
-				HP += addend;
-				if (HP > BaseHP){
-					HP = BaseHP;
-				}
-				
-				for (int i = 0; i < 4; i++){
-					if (Attacks[i] != null){
-						addend = Math.round((float)Attacks[i].BaseNumUses/8) * multiplier;
-						if (addend < 1) addend = 1;
-						Attacks[i].NumUses += addend;
-						if (Attacks[i].NumUses > Attacks[i].BaseNumUses)
-							Attacks[i].NumUses = Attacks[i].BaseNumUses;
-					}
-				}
-				
-				EnergyRestoreTimer = System.currentTimeMillis();
-			}
-		}
-	}
-	
-	public int BattleSpeed(){
-		return (int)Math.round((float)BaseSpeed * (Math.pow(Math.cbrt(4), SpeedModifier)));
-	}
-	
-	public int BattleAttack(){
-		return (int)Math.round((float)BaseAttack * (Math.pow(Math.cbrt(4), AttackModifier)));
-	}
-
-	public int BattleDefense(){
-		return (int)Math.round((float)BaseDefense * (Math.pow(Math.cbrt(4), DefenseModifier)));
-	}
-	
-	public String BuffSpeed(int modifier){
-		if (modifier < 0) return DebuffSpeed(modifier*-1);
-		
-		int originalStat = SpeedModifier;
-		SpeedModifier += modifier;
-		if (SpeedModifier > 3) SpeedModifier = 3;
-		int newStat = SpeedModifier;
-		switch (newStat - originalStat){
-			case 0:
-				return Name + "'s speed can't go any higher.";
-			case 1:
-				return Name + "'s speed is raised.";
-			case 2:
-				return Name + "'s speed is greatly raised.";
-			case 3: case 4: case 5:
-				return Name + "'s speed is incredibly raised.";
-			case 6:
-				return Name + "'s speed is MAXIMUM.";
-			default: return "";
-		}
-	}
-	
-	public String DebuffSpeed(int modifier){
-		if (modifier < 0) return BuffSpeed(modifier*-1);
-		
-		int originalStat = SpeedModifier;
-		SpeedModifier -= modifier;
-		if (SpeedModifier < -3) SpeedModifier = -3;
-		int newStat = SpeedModifier;
-		switch (originalStat - newStat){
-			case 0:
-				return Name + "'s speed can't go any lower.";
-			case 1:
-				return Name + "'s speed is lowered.";
-			case 2:
-				return Name + "'s speed is greatly lowered.";
-			case 3: case 4: case 5:
-				return Name + "'s speed is incredibly lowered.";
-			case 6:
-				return Name + "'s speed is MINIMUM.";
-			default: return "";
-		}
-	}
-	
-	public String BuffAttack(int modifier){
-		if (modifier < 0) return DebuffAttack(modifier*-1);
-		
-		int originalStat = AttackModifier;
-		AttackModifier += modifier;
-		if (AttackModifier > 3) AttackModifier = 3;
-		int newStat = AttackModifier;
-		switch (newStat - originalStat){
-			case 0:
-				return Name + "'s attack can't go any higher.";
-			case 1:
-				return Name + "'s attack is raised.";
-			case 2:
-				return Name + "'s attack is greatly raised.";
-			case 3: case 4: case 5:
-				return Name + "'s attack is incredibly raised.";
-			case 6:
-				return Name + "'s attack is MAXIMUM.";
-			default: return "";
-		}
-	}
-	
-	public String DebuffAttack(int modifier){
-		if (modifier < 0) return BuffAttack(modifier*-1);
-		
-		int originalStat = AttackModifier;
-		AttackModifier -= modifier;
-		if (AttackModifier < -3) AttackModifier = -3;
-		int newStat = AttackModifier;
-		switch (originalStat - newStat){
-			case 0:
-				return Name + "'s attack can't go any lower.";
-			case 1:
-				return Name + "'s attack is lowered.";
-			case 2:
-				return Name + "'s attack is greatly lowered.";
-			case 3: case 4: case 5:
-				return Name + "'s attack is incredibly lowered.";
-			case 6:
-				return Name + "'s attack is MINIMUM.";
-			default: return "";
-		}
-	}
-	
-	public String BuffDefense(int modifier){
-		if (modifier < 0) return DebuffDefense(modifier*-1);
-		
-		int originalStat = DefenseModifier;
-		DefenseModifier += modifier;
-		if (DefenseModifier > 3) DefenseModifier = 3;
-		int newStat = DefenseModifier;
-		switch (newStat - originalStat){
-			case 0:
-				return Name + "'s defense can't go any higher.";
-			case 1:
-				return Name + "'s defense is raised.";
-			case 2:
-				return Name + "'s defense is greatly raised.";
-			case 3: case 4: case 5:
-				return Name + "'s defense is incredibly raised.";
-			case 6:
-				return Name + "'s defense is MAXIMUM.";
-			default: return "";
-		}
-	}
-	
-	public String DebuffDefense(int modifier){
-		if (modifier < 0) return BuffDefense(modifier*-1);
-		
-		int originalStat = DefenseModifier;
-		DefenseModifier -= modifier;
-		if (DefenseModifier < -3) DefenseModifier = -3;
-		int newStat = DefenseModifier;
-		switch (originalStat - newStat){
-			case 0:
-				return Name + "'s defense can't go any lower.";
-			case 1:
-				return Name + "'s defense is lowered.";
-			case 2:
-				return Name + "'s defense is greatly lowered.";
-			case 3: case 4: case 5:
-				return Name + "'s defense is incredibly lowered.";
-			case 6:
-				return Name + "'s defense is MINIMUM.";
-			default: return "";
-		}
 	}
 	
 	public String He(boolean capitalized){
@@ -510,7 +235,6 @@ public abstract class PixelPet implements Serializable{
 	public void Update()
 	{
 		UpdatePetForm();		
-		RestoreHealthAndPP();
 		UpdateAnimation();
 	}
 	
@@ -520,11 +244,6 @@ public abstract class PixelPet implements Serializable{
 		return result;
 	}
 	
-	public List<PetItem> GetItemDrops()
-	{
-		return new ArrayList<PetItem>();
-	}
-	
 	public void LevelUp()
 	{
 		if (Level < MaxLevel){
@@ -532,8 +251,6 @@ public abstract class PixelPet implements Serializable{
 			if (Exp < ExpToNextLevel) Exp = ExpToNextLevel;
 			ExpToNextLevel = (int)Math.pow(Level+1, 3);
 		}else Exp = 0;
-		
-		UpdateBaseStats();
 	}
 	
 	public void UpdatePetForm()
@@ -543,22 +260,6 @@ public abstract class PixelPet implements Serializable{
 		else if (LevelWhenEvolve > 0 && Level >= LevelWhenEvolve){
 			JustEvolved = true;
 			EvolveForm();
-		}
-	}
-	
-	public void InitializeLevelUpAttackList()
-	{
-		LevelAttackList = new ArrayList<LevelAttack>();
-	}
-	
-	public void LearnLevelUpAttacks()
-	{
-		int counter = 0;
-		for (int i = LevelAttackList.size()-1; i >= 0; i--){
-			if (LevelAttackList.get(i).Level > Level) continue;
-			Attacks[counter] = LevelAttackList.get(i).Attack;
-			counter++;
-			if (counter == 4) return;
 		}
 	}
 	
@@ -586,14 +287,6 @@ public abstract class PixelPet implements Serializable{
 		Level = baby.Level;
 		TimeEggFound = baby.TimeEggFound;
 		TimeEggHatched = baby.TimeEggHatched;
-		
-		BaseHP = baby.BaseHP;
-		HP = BaseHP;
-		BaseSpeed = baby.BaseSpeed;
-		BaseAttack = baby.BaseAttack;
-		BaseDefense = baby.BaseDefense;
-		UpdateBaseStats();
-		Attacks = baby.Attacks; //??? TODO:: UPDATE ATTACKS!!!
 		
 		ambition = baby.ambition;
 		empathy = baby.empathy;
@@ -631,8 +324,6 @@ public abstract class PixelPet implements Serializable{
 			CurrentForm = PetForm.Primary;
 			Level = 5;
 			ExpToNextLevel = (int)Math.pow(Level+1, 3);
-			UpdateBaseStats();
-			ResetBattleStats(true, true, true, true, true);
 			JustEvolved = true;
 		}
 		else if (currentTime >= (timeEggHatched * 2) / 3)
@@ -667,69 +358,16 @@ public abstract class PixelPet implements Serializable{
 		if (CurrentForm != PetForm.Egg)
 		{
 			if (Hunger >= 60){
-				if (HP <= 0){
-					CurrFrame = 0;
-					FrameCount = 0;
-					PetDescription = Name + " is resting.";
-				}else if (HP <= BaseHP/2){
-					FrameDelay = 20;
-					PetDescription = Name + " is pretty tired...";
-				}else{
-					FrameDelay = 10;
-					PetDescription = Name + " is thrashing about!";
-				}
+				FrameDelay = 10;
+				PetDescription = Name + " is thrashing about!";
 			}else if (Hunger >= 25){
-				if (HP <= 0){
-					CurrFrame = 0;
-					FrameCount = 0;
-					PetDescription = Name + " is hungry and resting.";
-				}else if (HP <= BaseHP/2){
-					FrameDelay = 20;
-					PetDescription = Name + " is hungry and tired...";
-				}else{
-					FrameDelay = 10;
-					PetDescription = Name + " is pretty hungry...";
-				}
+				FrameDelay = 20;
+				PetDescription = Name + " is pretty hungry...";
 			}else{
-				if (HP <= 0){
-					CurrFrame = 0;
-					FrameCount = 0;
-					PetDescription = Name + " is starving and resting.";
-				}else if (HP <= BaseHP/2){
-					FrameDelay = 20;
-					PetDescription = Name + " is starving and tired...";
-				}else{
-					FrameDelay = 10;
-					PetDescription = Name + " is starving!!!";
-				}
+				FrameDelay = 40;
+				PetDescription = Name + " is starving!!!";
 			}
 		}
-	}
-	
-	public Attack PickNextAttack()
-	{
-		int i;
-		
-		if (Attacks[3] != null)
-			i = PPApp.AppRandom.nextInt(4);
-		else if (Attacks[2] != null)
-			i = PPApp.AppRandom.nextInt(3);
-		else
-			i = PPApp.AppRandom.nextInt(2);
-		
-		int counter = 0;
-		while (Attacks[i] == null || Attacks[i].NumUses <= 0 || 
-				(MentalStatus != null && MentalStatus.getClass().equals(Berserk.class) && Attacks[i].BasePower <= 0)){
-			i++;
-			if (i >= Attacks.length)
-				i = 0;
-			counter++;
-			if (counter > 3) break;
-		}
-		
-		if (Attacks[i] != null && Attacks[i].NumUses > 0)
-			return Attacks[i];
-		return new Struggle();
 	}
 	
 	public String GetGender()

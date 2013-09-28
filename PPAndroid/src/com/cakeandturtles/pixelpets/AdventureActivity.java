@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,20 +17,16 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cakeandturtles.pixelpets.adventures.Adventure;
 import com.cakeandturtles.pixelpets.adventures.AdventureOption;
-import com.cakeandturtles.pixelpets.adventures.GreedyTreasure;
-import com.cakeandturtles.pixelpets.adventures.Quest;
 import com.cakeandturtles.pixelpets.items.PetItem;
 import com.cakeandturtles.pixelpets.pets.PixelPet;
 import com.example.pixelpets.R;
 
 public class AdventureActivity extends Activity {
 	private PPApp appState;
-	private boolean _isSpecialAdventure;
 	private boolean _adventureOver;
 	private int areaIndex;
 	private PixelPet _activePet;
@@ -61,24 +56,9 @@ public class AdventureActivity extends Activity {
 		
 		appState = ((PPApp)getApplicationContext());
 		areaIndex = -1;
-		_isSpecialAdventure = false;
 		_adventureOver = false;
 		
 		_activePet = appState.getTempActivePet();
-		if (_activePet.HP <= 0){
-			boolean finish = true;
-			appState.tempIndex--;
-			for (int i = 0; i < 4; i++){
-				appState.tempIndex++;
-				if (appState.tempIndex >= 4) appState.tempIndex = 0;
-				PixelPet temp = appState.getTempActivePet();
-				if (temp != null && temp.CurrentForm != PixelPet.PetForm.Egg && temp.HP > 0){
-					finish = false;
-					break;
-				}
-			}
-			if (finish) finish();
-		}_activePet = appState.getTempActivePet();
 		
 		GetNewAdventure();
 		_adventure.InitialEffect(appState.MyAdventures);
@@ -224,38 +204,7 @@ public class AdventureActivity extends Activity {
 	
 	public void GetNewAdventure()
 	{
-		Bundle extras = getIntent().getExtras();
-		if (extras != null){
-			areaIndex = extras.getInt("com.cakeandturtles.pixelpets.areaIndex");
-			String specialQuest = extras.getString("com.cakeandturtles.pixelpets.specialAdventure");
-			if (specialQuest != null){
-				_isSpecialAdventure = true;
-				if (specialQuest.equals("FAIRYQUEST")) 
-					_adventure = Adventure.GetNewFairyQuest(_activePet, areaIndex, appState.MyAdventures, appState.MyInventory, appState.Trainer);
-				else{
-					_adventure = Adventure.GetNewAdventure(_activePet, areaIndex, appState.MyAdventures, appState.MyInventory, appState.Trainer, appState.MyAdventures.ConsecutiveAdventureCounter);
-				}
-			}else{
-				appState.MyAdventures.ConsecutiveAdventureCounter++;
-				Log.w("pixelPetCounter", "c: "+appState.MyAdventures.ConsecutiveAdventureCounter);
-				_adventure = Adventure.GetNewAdventure(_activePet, areaIndex, appState.MyAdventures, appState.MyInventory, appState.Trainer, appState.MyAdventures.ConsecutiveAdventureCounter);
-			}
-		}else{
-			_adventure = Adventure.GetNewAdventure(_activePet, 0, appState.MyAdventures, appState.MyInventory, appState.Trainer, appState.MyAdventures.ConsecutiveAdventureCounter);
-		}
-		Quest checkQuest = null;
-		if (_adventure.AdventureQuest != null)
-			checkQuest = appState.MyAdventures.GetQuest(_adventure.AdventureQuest.Name);
-		if (_adventure.EnemyPets != null && _adventure.EnemyPets.length > 0){
-			Intent intent = new Intent(this, TrainingActivity.class);
-			intent.putExtra("com.cakeandturtles.pixelpets.areaIndex", areaIndex);
-			intent.putExtra("com.cakeandturtles.pixelpets.battlePets", _adventure.EnemyPets);
-			startActivity(intent);
-			finish();
-			_adventure = new GreedyTreasure(_activePet); //TODO:: A default workaround to prevent crashes
-		}else if (checkQuest != null){
-			_adventure.CompleteQuest(checkQuest, checkQuest.IsQuestComplete(appState.MyInventory));
-		}
+		_adventure = Adventure.GetNewAdventure(_activePet, areaIndex, appState.MyAdventures, appState.MyInventory, appState.Trainer);
 	}
 	
 	public void AdventureAgain(View view){
@@ -298,26 +247,6 @@ public class AdventureActivity extends Activity {
 	public void DoOption(AdventureOption option)
 	{
 		String newDescription = option.Result + "\n";
-		
-		if (option.HPMod != 0){
-			_activePet.HP += option.HPMod;
-			if (_activePet.HP > _activePet.BaseHP)
-				_activePet.HP = _activePet.BaseHP;
-			if (_activePet.HP <= 0){
-				_activePet.HP = 0;
-				newDescription += "\n" + _activePet.Name + " is OUT OF ENERGY!!";
-				
-				AlertDialog.Builder alert = new AlertDialog.Builder(this);
-				alert.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int which){
-						dialog.cancel();
-					}
-				});
-				alert.setTitle("Out of Energy!");
-				alert.setMessage(_activePet.Name + " is OUT OF ENERGY!!");
-				alert.show();
-			}
-		}
 			
 		
 		if (option.EggEncounter != null){
@@ -339,116 +268,113 @@ public class AdventureActivity extends Activity {
 			}
 		}
 		
-		if (_activePet.HP > 0){
-			if (option.ResultingQuest != null){
-				newDescription += option.ResultingQuest.Description;
-				newDescription += "\nYou have started a QUEST!";
-				appState.MyAdventures.AddQuest(option.ResultingQuest);
-			}if (option.SubtractQuest != null){
-				appState.MyAdventures.RemoveQuest(option.SubtractQuest);
-			}
+		if (option.ResultingQuest != null){
+			newDescription += option.ResultingQuest.Description;
+			newDescription += "\nYou have started a QUEST!";
+			appState.MyAdventures.AddQuest(option.ResultingQuest);
+		}if (option.SubtractQuest != null){
+			appState.MyAdventures.RemoveQuest(option.SubtractQuest);
+		}
+		
+		for (int i = 0; i < option.ResultingItems.length; i++){
+			if (option.ResultingItems[i].Quantity <= 0) continue;
 			
-			for (int i = 0; i < option.ResultingItems.length; i++){
-				if (option.ResultingItems[i].Quantity <= 0) continue;
-				
-				PetItem item = option.ResultingItems[i];
-				int quantity = appState.MyInventory.addToInventory(item, appState.MyCodex);
-				if (quantity > 0)
-					newDescription += "\n YOU GAIN " + quantity + " " +option.ResultingItems[i].Name + "!";
-				else newDescription += "\nYou cannot hold any more " + item.Name + "...";
-			}
-			for (int i = 0; i < option.SubtractItems.length; i++){
-				if (option.SubtractItems[i].Quantity <= 0) continue;
-				
-				int quantity = 0;
-				for (int j = 0; j < option.SubtractItems[i].Quantity; j++){
-					if (appState.MyInventory.inventoryContains(option.SubtractItems[i])){
-						appState.MyInventory.removeOneFromInventory(option.SubtractItems[i]);
-						quantity++;
-					}else break;
-				}
-				newDescription += "\n YOU LOSE " + quantity + " " +option.SubtractItems[i].Name;
-			}
+			PetItem item = option.ResultingItems[i];
+			int quantity = appState.MyInventory.addToInventory(item, appState.MyCodex);
+			if (quantity > 0)
+				newDescription += "\n YOU GAIN " + quantity + " " +option.ResultingItems[i].Name + "!";
+			else newDescription += "\nYou cannot hold any more " + item.Name + "...";
+		}
+		for (int i = 0; i < option.SubtractItems.length; i++){
+			if (option.SubtractItems[i].Quantity <= 0) continue;
 			
-			int petExp = _activePet.CalculateRealExp(option.ExpForOption);
-			if (_activePet.Level < _activePet.MaxLevel){
-				if (petExp > 0)
-					newDescription += "\n" + _activePet.Name + " GAINS " + petExp + " EXP!";
-				else if (option.ExpForOption < 0)
-					newDescription += "\n" + _activePet.Name + " LOSES " + petExp + " EXP..."; //TODO::???
-				_activePet.Exp += petExp;
-				for (int i = 0; i < 4; i++){
-					PixelPet pet = appState.getActivePets()[i];
-					if (pet == null) break;
-					AlertDialog.Builder levelUp = null;
-					if (pet.Level < pet.MaxLevel && pet.Exp >= pet.ExpToNextLevel)
-						levelUp = appState.LevelUp(pet, i, this);
-					pet.UpdatePetForm();
-					
-					if (pet.CurrentForm != PixelPet.PetForm.Primary){
-						if (pet.JustEvolved){
-							appState.PetEvolved(i, this);
-							
-							if (!appState.notifications[i])
-								appState.NotifyOfPetFormChange(pet, i);
-							appState.ClearNotifications(false, pet);
-						}
-					}else{
-						if (pet.JustEvolved && !appState.notifications[i])
+			int quantity = 0;
+			for (int j = 0; j < option.SubtractItems[i].Quantity; j++){
+				if (appState.MyInventory.inventoryContains(option.SubtractItems[i])){
+					appState.MyInventory.removeOneFromInventory(option.SubtractItems[i]);
+					quantity++;
+				}else break;
+			}
+			newDescription += "\n YOU LOSE " + quantity + " " +option.SubtractItems[i].Name;
+		}
+		
+		int petExp = _activePet.CalculateRealExp(option.ExpForOption);
+		if (_activePet.Level < _activePet.MaxLevel){
+			if (petExp > 0)
+				newDescription += "\n" + _activePet.Name + " GAINS " + petExp + " EXP!";
+			else if (option.ExpForOption < 0)
+				newDescription += "\n" + _activePet.Name + " LOSES " + petExp + " EXP..."; //TODO::???
+			_activePet.Exp += petExp;
+			for (int i = 0; i < 4; i++){
+				PixelPet pet = appState.getActivePets()[i];
+				if (pet == null) break;
+				AlertDialog.Builder levelUp = null;
+				if (pet.Level < pet.MaxLevel && pet.Exp >= pet.ExpToNextLevel)
+					levelUp = appState.LevelUp(pet, i, this);
+				pet.UpdatePetForm();
+				
+				if (pet.CurrentForm != PixelPet.PetForm.Primary){
+					if (pet.JustEvolved){
+						appState.PetEvolved(i, this);
+						
+						if (!appState.notifications[i])
 							appState.NotifyOfPetFormChange(pet, i);
-					}
-					if (pet == _activePet)
 						appState.ClearNotifications(false, pet);
-					
-					if (levelUp != null)
-						levelUp.show();
-					
-				}
-				_activePet = appState.getTempActivePet();
-			}else{
-				for (int i = 0; i < 4; i++){
-					PixelPet pet = appState.getActivePets()[i];
-					if (pet == null) continue;
-					if (pet.CurrentForm == PixelPet.PetForm.Primary && pet.JustEvolved && !appState.notifications[i])
+					}
+				}else{
+					if (pet.JustEvolved && !appState.notifications[i])
 						appState.NotifyOfPetFormChange(pet, i);
 				}
+				if (pet == _activePet)
+					appState.ClearNotifications(false, pet);
+				
+				if (levelUp != null)
+					levelUp.show();
+				
 			}
-			
-			if (option.RestoresEnergy){
-				newDescription += "\n" + _activePet.Name + " is FULLY RESTORED!";
-				_activePet.ResetBattleStats(true, true, true, true, true);
+			_activePet = appState.getTempActivePet();
+		}else{
+			for (int i = 0; i < 4; i++){
+				PixelPet pet = appState.getActivePets()[i];
+				if (pet == null) continue;
+				if (pet.CurrentForm == PixelPet.PetForm.Primary && pet.JustEvolved && !appState.notifications[i])
+					appState.NotifyOfPetFormChange(pet, i);
 			}
-			
-			int helper = _activePet.ModifyAmbition(option.AmbitionModifier);
-			if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS AMBITION!";
-			else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES AMBITION...";
-			else if (option.AmbitionModifier < 0) newDescription += "\n" + _activePet.Name + "'s AMBITION is zero.";
-			else if (option.AmbitionModifier > 0) newDescription += "\n" + _activePet.Name + "'s AMBITION is max.";
-			
-			helper = _activePet.ModifyEmpathy(option.EmpathyModifier);
-			if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS EMPATHY!";
-			else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES EMPATHY...";
-			else if (option.EmpathyModifier < 0) newDescription += "\n" + _activePet.Name + "'s EMPATHY is zero.";
-			else if (option.EmpathyModifier > 0) newDescription += "\n" + _activePet.Name + "'s EMPATHY is max.";
-			
-			helper = _activePet.ModifyInsight(option.InsightModifier);
-			if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS INSIGHT!";
-			else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES INSIGHT...";
-			else if (option.InsightModifier < 0) newDescription += "\n" + _activePet.Name + "'s INSIGHT is zero.";
-			else if (option.InsightModifier > 0) newDescription += "\n" + _activePet.Name + "'s INSIGHT is max.";
-			
-			helper = _activePet.ModifyDiligence(option.DiligenceModifier);
-			if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS DILIGENCE!";
-			else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES DILIGENCE...";
-			else if (option.DiligenceModifier < 0) newDescription += "\n" + _activePet.Name + "'s DILIGENCE is zero.";
-			else if (option.DiligenceModifier > 0) newDescription += "\n" + _activePet.Name + "'s DILIGENCE is max.";
-			
-			helper = _activePet.ModifyCharm(option.CharmModifier);
-			if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS CHARM!";
-			else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES CHARM...";
-			else if (option.CharmModifier < 0) newDescription += "\n" + _activePet.Name + "'s CHARM is zero.";
-			else if (option.CharmModifier > 0) newDescription += "\n" + _activePet.Name + "'s CHARM is max.";
 		}
+		
+		if (option.RestoresEnergy){
+			newDescription += "\n" + _activePet.Name + " is FULLY RESTORED!";
+		}
+		
+		int helper = _activePet.ModifyAmbition(option.AmbitionModifier);
+		if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS AMBITION!";
+		else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES AMBITION...";
+		else if (option.AmbitionModifier < 0) newDescription += "\n" + _activePet.Name + "'s AMBITION is zero.";
+		else if (option.AmbitionModifier > 0) newDescription += "\n" + _activePet.Name + "'s AMBITION is max.";
+		
+		helper = _activePet.ModifyEmpathy(option.EmpathyModifier);
+		if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS EMPATHY!";
+		else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES EMPATHY...";
+		else if (option.EmpathyModifier < 0) newDescription += "\n" + _activePet.Name + "'s EMPATHY is zero.";
+		else if (option.EmpathyModifier > 0) newDescription += "\n" + _activePet.Name + "'s EMPATHY is max.";
+		
+		helper = _activePet.ModifyInsight(option.InsightModifier);
+		if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS INSIGHT!";
+		else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES INSIGHT...";
+		else if (option.InsightModifier < 0) newDescription += "\n" + _activePet.Name + "'s INSIGHT is zero.";
+		else if (option.InsightModifier > 0) newDescription += "\n" + _activePet.Name + "'s INSIGHT is max.";
+		
+		helper = _activePet.ModifyDiligence(option.DiligenceModifier);
+		if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS DILIGENCE!";
+		else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES DILIGENCE...";
+		else if (option.DiligenceModifier < 0) newDescription += "\n" + _activePet.Name + "'s DILIGENCE is zero.";
+		else if (option.DiligenceModifier > 0) newDescription += "\n" + _activePet.Name + "'s DILIGENCE is max.";
+		
+		helper = _activePet.ModifyCharm(option.CharmModifier);
+		if (helper > 0) newDescription += "\n" + _activePet.Name + " GAINS CHARM!";
+		else if (helper < 0) newDescription += "\n" + _activePet.Name + " LOSES CHARM...";
+		else if (option.CharmModifier < 0) newDescription += "\n" + _activePet.Name + "'s CHARM is zero.";
+		else if (option.CharmModifier > 0) newDescription += "\n" + _activePet.Name + "'s CHARM is max.";
 			
 		_adventureDescription.setText(newDescription);
 			
@@ -562,7 +488,6 @@ public class AdventureActivity extends Activity {
 	}
 	
 	private void ExitActivity(){
-		appState.MyAdventures.ConsecutiveAdventureCounter = 0;
 		for (int i = 0; i < 4; i++){
 			if (appState.getActivePets()[i] != null)
 				appState.getActivePets()[i].RestartEnergyRestoreTimer();
@@ -645,26 +570,5 @@ public class AdventureActivity extends Activity {
 		_adventureAgain.setClickable(true);
 		_backToMap.setVisibility(View.VISIBLE);
 		_backToMap.setClickable(true);
-		
-		boolean allDead = true;
-		for (int i = 0; i < 4; i++){
-			if (appState.getActivePets()[i] == null) continue;
-			else if (appState.getActivePets()[i].CurrentForm != PixelPet.PetForm.Egg && appState.getActivePets()[i].HP > 0)
-				allDead = false;
-		}
-		if (_isSpecialAdventure || allDead){// || appState.MyAdventures.NewEggIndex >= 0){
-			_adventureAgain.setVisibility(View.GONE);
-			_adventureAgain.setClickable(false);
-			if (allDead)
-				appState.ResetConsecutiveAdventureCounter(true, this);
-			
-			LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams)_backToMap.getLayoutParams();
-			layout.weight = 1.0f;
-			_backToMap.setLayoutParams(layout);
-			if (_isSpecialAdventure)
-				_backToMap.setText("Back to Map");
-			else
-				_backToMap.setText("Back to Garden");
-		}
 	}
 }

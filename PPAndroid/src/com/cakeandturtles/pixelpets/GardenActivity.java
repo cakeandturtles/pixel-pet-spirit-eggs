@@ -81,7 +81,6 @@ public class GardenActivity extends Activity{
 		
 		UpdatePetIndex();
 		appState.tempIndex = petIndex;
-		appState.MyAdventures.InBattle = false;
 		_activePet = appState.getTempActivePet();
 		HandleAndDrawPet(true);
 		UpdateNextPrevButtons();
@@ -288,49 +287,27 @@ public class GardenActivity extends Activity{
 			alert.show();
 		}
 		else{
-			if (_activePet.HP <= 0){
-				alert.setTitle("Out of Energy");
-				alert.setMessage("This pet is out of energy and cannot adventure!");
-				alert.show();				
-			}else{
-				for (int i = 0; i < 4; i++){
-					if (appState.getActivePets()[i] != null)
-						appState.getActivePets()[i].RestartEnergyRestoreTimer();
-				}
-				Intent intent = new Intent(this, WorldMapActivity.class);
-				startActivity(intent);
+			for (int i = 0; i < 4; i++){
+				if (appState.getActivePets()[i] != null)
+					appState.getActivePets()[i].RestartEnergyRestoreTimer();
 			}
+			Intent intent = new Intent(this, WorldMapActivity.class);
+			startActivity(intent);
 		}
 	}
 	
 	public void Train(View view)
 	{
+		//TODO:: Not Implemented
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int which){
 				dialog.cancel();
 			}
 		});
-		//Do something in response to button
-		if (_activePet.CurrentForm == PixelPet.PetForm.Egg){
-			alert.setTitle("Egg Fight!");
-			alert.setMessage("An egg cannot train or battle!");
-			alert.show();
-		}
-		else{
-			if (_activePet.HP <= 0){
-				alert.setTitle("Out of Energy");
-				alert.setMessage("This pet is out of energy and cannot battle!");
-				alert.show();
-			}else{
-				for (int i = 0; i < 4; i++){
-					if (appState.getActivePets()[i] != null)
-						appState.getActivePets()[i].RestartEnergyRestoreTimer();
-				}
-				Intent intent = new Intent(this, TrainingActivity.class);
-				startActivity(intent);
-			}
-		}
+		alert.setTitle("Unimplemented");
+		alert.setMessage("This feature is currently unimplemented.\nSorry for the inconvenience :(");
+		alert.show();
 	}
 	
 	public void ManagePets(View view)

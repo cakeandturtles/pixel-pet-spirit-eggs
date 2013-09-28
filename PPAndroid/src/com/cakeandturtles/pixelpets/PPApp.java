@@ -19,7 +19,6 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.text.Html;
 import android.text.InputFilter;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -31,7 +30,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cakeandturtles.pixelpets.attacks.Attack;
 import com.cakeandturtles.pixelpets.items.PetItem;
 import com.cakeandturtles.pixelpets.managers.AdventureManager;
 import com.cakeandturtles.pixelpets.managers.Codex;
@@ -64,7 +62,6 @@ public class PPApp extends Application{
 	public boolean[] clickedNotifications;
 	
 	public TrainerObject Trainer;
-	public Attack learnNewAttack = null;
 	public boolean finishedReleaseForEgg = false;
 	public PixelPet tempEggSwapHolder = null;
 	public enum PocketType { PET_FOOD, MEDICINE, BATTLE, COLLECTABLE, TREASURE };
@@ -411,20 +408,6 @@ public class PPApp extends Application{
 		_appRunnable = null;
 	}
 	
-	public void ResetConsecutiveAdventureCounter(boolean allDead, Context context)
-	{
-		MyAdventures.ConsecutiveAdventureCounter = 0;
-		AlertDialog.Builder alert = new AlertDialog.Builder(context);
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-			public void onClick(DialogInterface dialog, int which){
-				dialog.cancel();
-			}
-		});
-		alert.setTitle("Game Over!");
-		alert.setMessage("Gathering your fallen party, you scurry back to the garden to rest.");
-		alert.show();
-	}
-	
 	public String AddEggToParty(PixelPet egg){
 		String result = "";
 		
@@ -619,29 +602,12 @@ public class PPApp extends Application{
 		PixelPet prevPet = _activePets[index];
 		if (prevPet.CurrentForm == PixelPet.PetForm.Egg)
 			return;
-		int hp = prevPet.BaseHP;
-		int attack = prevPet.BaseAttack;
-		int speed = prevPet.BaseSpeed;
-		int defense = prevPet.BaseDefense;
 		PixelPet newPet = prevPet.Evolve();
 		MyCodex.AddToPetCodex(newPet);
 		newPet.EvolveFrom(prevPet);
-		if (hp > newPet.BaseHP) newPet.BaseHP = hp;
-		if (attack > newPet.BaseAttack) newPet.BaseAttack = attack;
-		if (speed > newPet.BaseSpeed) newPet.BaseSpeed = speed;
-		if (defense > newPet.BaseDefense) newPet.BaseDefense = defense;
 		_activePets[index] = newPet;
-		for (int i = 0; i < newPet.LevelAttackList.size(); i++){
-			if (newPet.LevelAttackList.get(i).Level == newPet.Level){
-				TryLearnNewAttack(newPet.LevelAttackList.get(i).Attack, newPet, index, context);
-			}
-		}
 		
 		String message = prevPet.Name + " has GROWN into " + newPet.Species +"!\n";
-		message += "HP: +" + (newPet.BaseHP - hp);
-		message += "\tSpd: +" + (newPet.BaseSpeed - speed);
-		message += "\nAtk: +" + (newPet.BaseAttack - attack);
-		message += "\tDef: +" + (newPet.BaseDefense - defense);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle("Metamorphosis!");
@@ -664,31 +630,13 @@ public class PPApp extends Application{
 	}
 	
 	public AlertDialog.Builder LevelUp(PixelPet levelPet, int index, Context context){
-		int hp = levelPet.BaseHP;
-		int attack = levelPet.BaseAttack;
-		int speed = levelPet.BaseSpeed;
-		int defense = levelPet.BaseDefense;
 		if (levelPet.Level >= levelPet.MaxLevel || levelPet.Exp < levelPet.ExpToNextLevel) 
 			return null;
 		while (levelPet.Exp >= levelPet.ExpToNextLevel){
 			levelPet.LevelUp();
-			for (int i = 0; i < levelPet.LevelAttackList.size(); i++){
-				if (levelPet.LevelAttackList.get(i).Level == levelPet.Level){
-					TryLearnNewAttack(levelPet.LevelAttackList.get(i).Attack, levelPet, index, context);
-				}
-			}
 		}
-		if (hp > levelPet.BaseHP) levelPet.BaseHP = hp;
-		if (attack > levelPet.BaseAttack) levelPet.BaseAttack = attack;
-		if (speed > levelPet.BaseSpeed) levelPet.BaseSpeed = speed;
-		if (defense > levelPet.BaseDefense) levelPet.BaseDefense = defense;
-		levelPet.HP += (levelPet.BaseHP - hp);
 		
 		String message = levelPet.Name + " is now Level " + levelPet.Level + "!\n";
-		message += "HP: +" + (levelPet.BaseHP - hp);
-		message += "\tSpd: +" + (levelPet.BaseSpeed - speed);
-		message += "\nAtk: +" + (levelPet.BaseAttack - attack);
-		message += "\tDef: +" + (levelPet.BaseDefense - defense);
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(context);
 		alert.setTitle("Level up!");
@@ -699,55 +647,6 @@ public class PPApp extends Application{
 			}
 		});
 		return alert;
-	}
-	
-	public void TryLearnNewAttack(final Attack attack, final PixelPet pet, final int index, final Context context){
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		String message = "<b>" + attack.Name + ":</b> (Type: " + attack.AttackType.toString() + ")";
-		message += "<br/><i>\"" + attack.Description;
-		message += "\"</i><br/><br/>&nbsp;<b>Power:</b> &nbsp;";
-		if (attack.BasePower > 0) message += attack.BasePower;
-		else if (attack.BasePower == 0) message += "---";
-		else message += "???";
-		message += "<br/><b># Uses:</b> &nbsp;" + attack.NumUses + "/" + attack.BaseNumUses;
-		
-		boolean hasSpace = false;
-		for (int i = 0; i < 4; i++){
-			if (pet.Attacks[i] == null){
-				hasSpace = true;
-				pet.Attacks[i] = attack;
-
-				builder.setTitle(pet.Name + " learned new Attack!");
-				builder.setNegativeButton("Ok", new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int which){
-						dialog.cancel();
-					}
-				});
-				break;
-			}
-		}
-		if (!hasSpace){
-			builder.setTitle(pet.Name + " can learn new Attack!");
-			message += "<br/><br/>Do you want to forget a move to learn " + attack.Name + "?";
-			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-				}
-			});
-			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					learnNewAttack = attack;
-					Intent intent = new Intent(context, LearnNewMoveActivity.class);
-					intent.putExtra("com.cakeandturtles.pixelpets.petIndex", index);
-					context.startActivity(intent);
-				}
-			});
-			builder.setCancelable(false);
-		}
-		
-		builder.setMessage(Html.fromHtml(message));
-		
-		builder.show();
 	}
 	
 	public void TryWithdraw(final int index, final Context context){

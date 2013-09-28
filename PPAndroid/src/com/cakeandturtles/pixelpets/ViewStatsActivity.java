@@ -5,23 +5,17 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cakeandturtles.pixelpets.attacks.Attack;
 import com.cakeandturtles.pixelpets.managers.Settings;
 import com.cakeandturtles.pixelpets.pets.PixelPet;
 import com.cakeandturtles.pixelpets.pets.PixelPet.BattleType;
@@ -106,15 +100,11 @@ public class ViewStatsActivity extends Activity {
 			public void run(){
 				HandleAndDrawPet();
 				UpdateStatistics();
-				if (appState.MyAdventures.InBattle)
-					_activePet.UpdateAnimation();
-				else{
-					for (int i = 0; i < 4; i++){
-						PixelPet pet = appState.getActivePets()[i];
-						if (pet == null) continue;
-						if (pet == _activePet) pet.Update();
-						else pet.UpdatePetForm();
-					}
+				for (int i = 0; i < 4; i++){
+					PixelPet pet = appState.getActivePets()[i];
+					if (pet == null) continue;
+					if (pet == _activePet) pet.Update();
+					else pet.UpdatePetForm();
 				}
 				handler.postDelayed(this, 60);
 			}
@@ -195,50 +185,6 @@ public class ViewStatsActivity extends Activity {
 		HandleAndDrawPet();
 	}
 	
-	public void ViewMove1(View view){
-		Attack attack = _activePet.Attacks[0];
-		ViewAttack(attack, "Pet Attack");
-	}
-	
-	public void ViewMove2(View view){
-		Attack attack = _activePet.Attacks[1];
-		ViewAttack(attack, "Pet Attack");
-	}
-	
-	public void ViewMove3(View view){
-		Attack attack = _activePet.Attacks[2];
-		if (attack != null)
-			ViewAttack(attack, "Pet Attack");
-	}
-	
-	public void ViewMove4(View view){
-		Attack attack = _activePet.Attacks[3];
-		if (attack != null)
-			ViewAttack(attack, "Pet Attack");
-	}
-	
-	public void ViewAttack(Attack attack, String title){
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle(title + "\n(Type: " + attack.AttackType.toString() + ")");
-		
-		String message = "<b>" + attack.Name + ":</b>";
-		message += "<br/><i>\"" + attack.Description;
-		message += "\"</i><br/><br/>&nbsp;<b>Power:</b> &nbsp;";
-		if (attack.BasePower > 0) message += attack.BasePower;
-		else if (attack.BasePower == 0) message += "---";
-		else message += "???";
-		//message += "\t\t<b>Accuracy:</b> &nbsp;" + attack.Accuracy;
-		message += "<br/><b># Uses:</b> &nbsp;" + attack.NumUses + "/" + attack.BaseNumUses;
-		alert.setMessage(Html.fromHtml(message));
-		
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-			public void onClick(DialogInterface dialog, int which){
-				dialog.cancel();
-			}
-		});
-		alert.show();
-	}
-	
 	public void NameYourPet(View view){
 		appState.NameYourPet(_activePet, view, this);
 	}
@@ -271,13 +217,6 @@ public class ViewStatsActivity extends Activity {
 		NotifyUserTriggerNameDialog();
 		UpdateStatistics();
 		
-		int width = ((View)findViewById(R.id.stat_red_hp_bar)).getMeasuredWidth();
-		View petHP = (View)findViewById(R.id.pet_hp_bar);
-		RelativeLayout.LayoutParams petHPParams = (RelativeLayout.LayoutParams)petHP.getLayoutParams();
-		petHPParams.width = (int)(width * ((float)_activePet.HP / (float)_activePet.BaseHP));
-		petHP.setLayoutParams(petHPParams);
-		((TextView)findViewById(R.id.pet_hp)).setText(_activePet.HP + "/" + _activePet.BaseHP);
-		
 		_petView.setImageResource(_activePet.GetDrawableId(false));
 		
 		Resources r = getResources();
@@ -298,26 +237,6 @@ public class ViewStatsActivity extends Activity {
 			((TextView)findViewById(R.id.pet_exp)).setText("???");
 			((TextView)findViewById(R.id.pet_exp_tolevel)).setText("???");
 			((TextView)findViewById(R.id.pet_hunger)).setText("???");
-			((TextView)findViewById(R.id.pet_hp)).setText("???");
-			((TextView)findViewById(R.id.pet_attack)).setText("???");
-			((TextView)findViewById(R.id.pet_speed)).setText("???");
-			((TextView)findViewById(R.id.pet_defense)).setText("???");
-			((Button)findViewById(R.id.pet_move1)).setText("--------");
-			((Button)findViewById(R.id.pet_move1)).setClickable(false);
-			((Button)findViewById(R.id.pet_move1)).getBackground().clearColorFilter();
-			((Button)findViewById(R.id.pet_move1)).setTextSize(18);
-			((Button)findViewById(R.id.pet_move2)).setText("--------");
-			((Button)findViewById(R.id.pet_move2)).setClickable(false);
-			((Button)findViewById(R.id.pet_move2)).getBackground().clearColorFilter();
-			((Button)findViewById(R.id.pet_move2)).setTextSize(18);
-			((Button)findViewById(R.id.pet_move3)).setText("--------");
-			((Button)findViewById(R.id.pet_move3)).setClickable(false);
-			((Button)findViewById(R.id.pet_move3)).getBackground().clearColorFilter();
-			((Button)findViewById(R.id.pet_move3)).setTextSize(18);
-			((Button)findViewById(R.id.pet_move4)).setText("--------");
-			((Button)findViewById(R.id.pet_move4)).setClickable(false);
-			((Button)findViewById(R.id.pet_move4)).getBackground().clearColorFilter();
-			((Button)findViewById(R.id.pet_move4)).setTextSize(18);
 			((TextView)findViewById(R.id.pet_ambition)).setText("???");
 			((TextView)findViewById(R.id.pet_empathy)).setText("???");
 			((TextView)findViewById(R.id.pet_insight)).setText("???");
@@ -351,50 +270,6 @@ public class ViewStatsActivity extends Activity {
 				((TextView)findViewById(R.id.pet_exp_tolevel)).setText(Integer.toString(_activePet.ExpToNextLevel)+" EXP");
 			else ((TextView)findViewById(R.id.pet_exp_tolevel)).setText("Max Level");
 			((TextView)findViewById(R.id.pet_hunger)).setText(_activePet.GetHungerString());
-			
-			((TextView)findViewById(R.id.pet_attack)).setText(Integer.toString(_activePet.BaseAttack));
-			((TextView)findViewById(R.id.pet_speed)).setText(Integer.toString(_activePet.BaseSpeed));
-			((TextView)findViewById(R.id.pet_defense)).setText(Integer.toString(_activePet.BaseDefense));
-			((Button)findViewById(R.id.pet_move1)).setText(Html.fromHtml(_activePet.Attacks[0].Name + "<br/><small>" + _activePet.Attacks[0].NumUses + "/" + _activePet.Attacks[0].BaseNumUses + "</small>"));
-			((Button)findViewById(R.id.pet_move1)).getBackground().setColorFilter(new LightingColorFilter(0xFF000000, _activePet.Attacks[0].GetBackgroundColor()));
-			((Button)findViewById(R.id.pet_move1)).setClickable(true);
-			((Button)findViewById(R.id.pet_move1)).setTextSize(16);
-			if (_activePet.Attacks[1] == null){
-				((Button)findViewById(R.id.pet_move2)).setText("--------");
-				((Button)findViewById(R.id.pet_move2)).setClickable(false);
-				((Button)findViewById(R.id.pet_move2)).getBackground().clearColorFilter();
-				((Button)findViewById(R.id.pet_move2)).setTextSize(18);
-			}
-			else{
-				((Button)findViewById(R.id.pet_move2)).setText(Html.fromHtml(_activePet.Attacks[1].Name + "<br/><small>" + _activePet.Attacks[1].NumUses + "/" + _activePet.Attacks[1].BaseNumUses + "</small>"));
-				((Button)findViewById(R.id.pet_move2)).getBackground().setColorFilter(new LightingColorFilter(0xFF000000, _activePet.Attacks[1].GetBackgroundColor()));
-				((Button)findViewById(R.id.pet_move2)).setClickable(true);
-				((Button)findViewById(R.id.pet_move2)).setTextSize(16);
-			}
-			if (_activePet.Attacks[2] == null){
-				((Button)findViewById(R.id.pet_move3)).setText("--------");
-				((Button)findViewById(R.id.pet_move3)).setClickable(false);
-				((Button)findViewById(R.id.pet_move3)).getBackground().clearColorFilter();
-				((Button)findViewById(R.id.pet_move3)).setTextSize(18);
-			}
-			else{
-				((Button)findViewById(R.id.pet_move3)).setText(Html.fromHtml(_activePet.Attacks[2].Name + "<br/><small>" + _activePet.Attacks[2].NumUses + "/" + _activePet.Attacks[2].BaseNumUses + "</small>"));
-				((Button)findViewById(R.id.pet_move3)).getBackground().setColorFilter(new LightingColorFilter(0xFF000000, _activePet.Attacks[2].GetBackgroundColor()));
-				((Button)findViewById(R.id.pet_move3)).setClickable(true);
-				((Button)findViewById(R.id.pet_move3)).setTextSize(16);
-			}
-			if (_activePet.Attacks[3] == null){
-				((Button)findViewById(R.id.pet_move4)).setText("--------");
-				((Button)findViewById(R.id.pet_move4)).setClickable(false);
-				((Button)findViewById(R.id.pet_move4)).getBackground().clearColorFilter();
-				((Button)findViewById(R.id.pet_move4)).setTextSize(18);
-			}
-			else{
-				((Button)findViewById(R.id.pet_move4)).setText(Html.fromHtml(_activePet.Attacks[3].Name + "<br/><small>" + _activePet.Attacks[3].NumUses + "/" + _activePet.Attacks[3].BaseNumUses + "</small>"));
-				((Button)findViewById(R.id.pet_move4)).getBackground().setColorFilter(new LightingColorFilter(0xFF000000, _activePet.Attacks[3].GetBackgroundColor()));
-				((Button)findViewById(R.id.pet_move4)).setClickable(true);
-				((Button)findViewById(R.id.pet_move4)).setTextSize(16);
-			}
 			((TextView)findViewById(R.id.pet_ambition)).setText(_activePet.GetAmbition());
 			((TextView)findViewById(R.id.pet_empathy)).setText(_activePet.GetEmpathy());
 			((TextView)findViewById(R.id.pet_insight)).setText(_activePet.GetInsight());

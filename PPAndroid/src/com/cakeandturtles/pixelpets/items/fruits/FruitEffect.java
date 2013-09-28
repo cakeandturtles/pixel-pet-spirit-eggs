@@ -22,16 +22,8 @@ public class FruitEffect extends ItemEffect{
 
 	public String DoItemEffect(PixelPet targetPet, PixelPet battleFoe)
 	{
-		int hMMod = com.cakeandturtles.pixelpets.attacks.Attack.GetTypeEffectiveness(targetPet.PrimaryType, MyType, true);
 		int hungerMod = 30;
-		if (targetPet.SecondaryType != null){
-			if (hMMod == 0){
-				hMMod = com.cakeandturtles.pixelpets.attacks.Attack.GetTypeEffectiveness(targetPet.SecondaryType, MyType, true);
-			}else if (hMMod < 0){
-				if (com.cakeandturtles.pixelpets.attacks.Attack.GetTypeEffectiveness(targetPet.SecondaryType, MyType, true) > 0)
-					hMMod++;
-			}
-		}
+		int hMMod = 0;
 		
 		String result = targetPet.Name + " eats the fruit.\n";
 		if (hMMod > 0){ 

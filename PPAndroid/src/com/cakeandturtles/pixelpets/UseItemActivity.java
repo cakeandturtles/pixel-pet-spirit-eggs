@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -14,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -54,9 +52,6 @@ public class UseItemActivity extends Activity {
 			if (_activePets[i] != null){
 				_activePets[i].CurrFrame = 0;
 				_activePets[i].FrameCount = 0;
-				if (_activePets[i].HP <= 0){
-					((LinearLayout)petBoxes[i]).setBackgroundColor(Color.parseColor("#66ff0000"));
-				}
 			
 				petBoxes[i].setOnTouchListener(new OnTouchListener(){
 					@Override
@@ -100,24 +95,11 @@ public class UseItemActivity extends Activity {
 			@Override
 			public void run(){
 				appState.ClearNotifications(true, null);
-				View[] petBoxes = new View[]{ findViewById(R.id.pet_box1), findViewById(R.id.pet_box2), findViewById(R.id.pet_box3), findViewById(R.id.pet_box4)};
 				UpdateTextDisplay();
 				HandleAndDrawPets();
 				for (int i = 0; i < 4; i++){
 					if (_activePets[i] != null){
-						if (!appState.MyAdventures.InBattle){
-							if (_activePets[i].HP <= 0){
-								_activePets[i].Update();
-								if (_activePets[i].HP > 0)
-									ResetColor(petBoxes[i]);
-							}
-							else{
-								_activePets[i].Update();
-							}
-						}
-						else{
-							_activePets[i].UpdateAnimation();
-						}
+						_activePets[i].Update();
 					}
 				}
 				handler.postDelayed(this, 60);
@@ -197,22 +179,16 @@ public class UseItemActivity extends Activity {
 			
 			dialog.create().show();
 		}else{
-			if (appState.MyAdventures.InBattle && appState.tempIndex == appState.BattleIndex){
-				appState.BattleUsedItem = petItem;
-				appState.BattleUsedItemOnIndex = appState.tempIndex;
-				finish();
-			}else{
-				String effect = petItem.Effect.DoItemEffect(appState.getTempActivePet(), null);
+			String effect = petItem.Effect.DoItemEffect(appState.getTempActivePet(), null);
 				
-				appState.MyInventory.removeOneFromInventory(petItem);
-				petItem.Quantity--;
-				if (!appState.MyInventory.inventoryContains(petItem)){
-					noMoreItems = true;
-					NoMoreItems();
-				}
-				DisplayEffectDialog(effect);
-				ResetColor(view);
+			appState.MyInventory.removeOneFromInventory(petItem);
+			petItem.Quantity--;
+			if (!appState.MyInventory.inventoryContains(petItem)){
+				noMoreItems = true;
+				NoMoreItems();
 			}
+			DisplayEffectDialog(effect);
+			ResetColor(view);
 		}
 		ResetTitle();
 	}
@@ -226,11 +202,6 @@ public class UseItemActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
-				if (appState.MyAdventures.InBattle){
-					appState.BattleUsedItem = petItem;
-					appState.BattleUsedItemOnIndex = appState.tempIndex;
-					UseItemActivity.this.finish();
-				}
 			}
 		});
 		
@@ -259,7 +230,7 @@ public class UseItemActivity extends Activity {
 	
 	public void ResetTitle()
 	{
-		if (petItem.Quantity != 1 && !appState.MyAdventures.InBattle)
+		if (petItem.Quantity != 1)
 			setTitle("Use Item: " + petItem.Name + " (" + petItem.Quantity + ")");
 		else
 			setTitle("Use Item: " + petItem.Name);
@@ -267,25 +238,13 @@ public class UseItemActivity extends Activity {
 	
 	public void ResetColor(View v){
 		if (v.getId() == R.id.pet_box1){
-			if (_activePets[0] != null && _activePets[0].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}else if (v.getId() == R.id.pet_box2){
-			if (_activePets[1] != null && _activePets[1].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}else if (v.getId() == R.id.pet_box3){
-			if (_activePets[2] != null && _activePets[2].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}else if (v.getId() == R.id.pet_box4){
-			if (_activePets[3] != null && _activePets[3].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}
 	}
 	
@@ -318,7 +277,7 @@ public class UseItemActivity extends Activity {
 	
 	private void HandleAndDrawPets()
 	{		
-		TextView[] petHPText = new TextView[]{ (TextView)findViewById(R.id.pet_hp1), (TextView)findViewById(R.id.pet_hp2), (TextView)findViewById(R.id.pet_hp3), (TextView)findViewById(R.id.pet_hp4)};
+		TextView[] petHungerText = new TextView[]{ (TextView)findViewById(R.id.pet_hunger1), (TextView)findViewById(R.id.pet_hunger2), (TextView)findViewById(R.id.pet_hunger3), (TextView)findViewById(R.id.pet_hunger4)};
 		View[] petHPBars = new View[] { (View)findViewById(R.id.pet_hp_bar1), (View)findViewById(R.id.pet_hp_bar2), (View)findViewById(R.id.pet_hp_bar3), (View)findViewById(R.id.pet_hp_bar4) };
 		View[] petHPRed = new View[] { (View)findViewById(R.id.stat_red_hp_bar1), (View)findViewById(R.id.stat_red_hp_bar2), (View)findViewById(R.id.stat_red_hp_bar3), (View)findViewById(R.id.stat_red_hp_bar4) };
 		ImageView[] petImages = new ImageView[]{ (ImageView)findViewById(R.id.pet_area1), (ImageView)findViewById(R.id.pet_area2), (ImageView)findViewById(R.id.pet_area3), (ImageView)findViewById(R.id.pet_area4)};
@@ -328,29 +287,26 @@ public class UseItemActivity extends Activity {
 		
 		for (int i = 0; i < 4; i++){
 			if (_activePets[i] == null) continue;
-			
+
 			int width = petHPRed[i].getMeasuredWidth();
 			RelativeLayout.LayoutParams petHPParams = (RelativeLayout.LayoutParams)petHPBars[i].getLayoutParams();
-			petHPParams.width = (int)(width * ((float)_activePets[i].HP / (float)_activePets[i].BaseHP));
+			petHPParams.width = (int)(width * ((float)_activePets[i].Hunger / (float)100));
 			petHPBars[i].setLayoutParams(petHPParams);
-			petHPText[i].setText(_activePets[i].HP + "/" + _activePets[i].BaseHP);
-
+			petHungerText[i].setText(_activePets[i].GetHungerString());
 				
 			petImages[i].setImageResource(_activePets[i].GetDrawableId(true));
-			if (!appState.MyAdventures.InBattle){
-				if (_activePets[i].CurrentForm == PixelPet.PetForm.Primary){
-					if (_activePets[i].JustEvolved){
-						appState.NameYourPet(_activePets[i], null, this);
-						if (appState.getSettings().NotifyUser && !appState.notifications[i])
-							appState.NotifyOfPetFormChange(_activePets[i], i);
-						_activePets[i].JustEvolved = false;
-					}
-				}else if (_activePets[i].CurrentForm != PixelPet.PetForm.Primary){
-					if (_activePets[i].JustEvolved){
-						appState.PetEvolved(i, this);
-						if (appState.getSettings().NotifyUser)
-							appState.NotifyOfPetFormChange(_activePets[i], i);
-					}
+			if (_activePets[i].CurrentForm == PixelPet.PetForm.Primary){
+				if (_activePets[i].JustEvolved){
+					appState.NameYourPet(_activePets[i], null, this);
+					if (appState.getSettings().NotifyUser && !appState.notifications[i])
+						appState.NotifyOfPetFormChange(_activePets[i], i);
+					_activePets[i].JustEvolved = false;
+				}
+			}else if (_activePets[i].CurrentForm != PixelPet.PetForm.Primary){
+				if (_activePets[i].JustEvolved){
+					appState.PetEvolved(i, this);
+					if (appState.getSettings().NotifyUser)
+						appState.NotifyOfPetFormChange(_activePets[i], i);
 				}
 			}
 			

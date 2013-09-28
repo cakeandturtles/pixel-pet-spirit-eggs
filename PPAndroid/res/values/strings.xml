@@ -38,7 +38,7 @@
     <string name="pet_exp_tolevel_title">To Next Level:</string>
     <string name="pet_exp_tolevel">30 EXP</string>
     <string name="pet_hunger_title">Hunger:</string>
-    <string name="pet_hunger">Full Up</string>
+    <string name="pet_hunger">Bloated</string>
     <string name="pet_hp_title">HP: </string>
     <string name="pet_hp">10/10</string>
     <string name="pet_attack_title">Attack: </string>

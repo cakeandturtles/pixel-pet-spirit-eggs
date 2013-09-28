@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -15,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -68,13 +66,8 @@ public class ManageActivity extends Activity {
 				HandleAndDrawPets();
 				for (int i = 0; i < 4; i++){
 					if (_activePets[i] != null){
-						if (_activePets[i].HP <= 0){
-							_activePets[i].Update();
-							ResetColor(petBoxes[i]);
-						}
-						else
-							_activePets[i].Update();
-						
+						_activePets[i].Update();
+					
 						petBoxes[i].setVisibility(View.VISIBLE);
 						petBoxes[i].setClickable(true);
 					}else{
@@ -143,11 +136,7 @@ public class ManageActivity extends Activity {
 		View[] petBoxes = new View[]{ findViewById(R.id.pet_box1), findViewById(R.id.pet_box2), findViewById(R.id.pet_box3), findViewById(R.id.pet_box4)};
 		
 		for (int i = 0; i < 4; i++){
-			if (_activePets[i] != null){
-				if (_activePets[i].HP <= 0){
-					((LinearLayout)petBoxes[i]).setBackgroundColor(Color.parseColor("#66ff0000"));
-				}
-			
+			if (_activePets[i] != null){			
 				petBoxes[i].setOnTouchListener(new OnTouchListener(){
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {
@@ -246,25 +235,13 @@ public class ManageActivity extends Activity {
 	
 	public void ResetColor(View v){
 		if (v.getId() == R.id.pet_box1){
-			if (_activePets[0] != null && _activePets[0].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}else if (v.getId() == R.id.pet_box2){
-			if (_activePets[1] != null && _activePets[1].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}else if (v.getId() == R.id.pet_box3){
-			if (_activePets[2] != null && _activePets[2].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}else if (v.getId() == R.id.pet_box4){
-			if (_activePets[3] != null && _activePets[3].HP <= 0)
-				v.setBackgroundColor(Color.parseColor("#66ff0000"));
-			else
-				v.setBackgroundResource(0);
+			v.setBackgroundResource(0);
 		}
 	}
 	
@@ -330,7 +307,7 @@ public class ManageActivity extends Activity {
 	
 	private void HandleAndDrawPets()
 	{		
-		TextView[] petHPText = new TextView[]{ (TextView)findViewById(R.id.pet_hp1), (TextView)findViewById(R.id.pet_hp2), (TextView)findViewById(R.id.pet_hp3), (TextView)findViewById(R.id.pet_hp4)};
+		TextView[] petHungerText = new TextView[]{ (TextView)findViewById(R.id.pet_hunger1), (TextView)findViewById(R.id.pet_hunger1), (TextView)findViewById(R.id.pet_hunger1), (TextView)findViewById(R.id.pet_hunger1)};
 		View[] petHPBars = new View[] { (View)findViewById(R.id.pet_hp_bar1), (View)findViewById(R.id.pet_hp_bar2), (View)findViewById(R.id.pet_hp_bar3), (View)findViewById(R.id.pet_hp_bar4) };
 		View[] petHPRed = new View[] { (View)findViewById(R.id.stat_red_hp_bar1), (View)findViewById(R.id.stat_red_hp_bar2), (View)findViewById(R.id.stat_red_hp_bar3), (View)findViewById(R.id.stat_red_hp_bar4) };
 		ImageView[] petImages = new ImageView[]{ (ImageView)findViewById(R.id.pet_area1), (ImageView)findViewById(R.id.pet_area2), (ImageView)findViewById(R.id.pet_area3), (ImageView)findViewById(R.id.pet_area4)};
@@ -340,13 +317,12 @@ public class ManageActivity extends Activity {
 		
 		for (int i = 0; i < 4; i++){
 			if (_activePets[i] == null) continue;
-			
+
 			int width = petHPRed[i].getMeasuredWidth();
 			RelativeLayout.LayoutParams petHPParams = (RelativeLayout.LayoutParams)petHPBars[i].getLayoutParams();
-			petHPParams.width = (int)(width * ((float)_activePets[i].HP / (float)_activePets[i].BaseHP));
+			petHPParams.width = (int)(width * ((float)_activePets[i].Hunger / (float)100));
 			petHPBars[i].setLayoutParams(petHPParams);
-			petHPText[i].setText(_activePets[i].HP + "/" + _activePets[i].BaseHP);
-
+			petHungerText[i].setText(_activePets[i].GetHungerString());
 				
 			petImages[i].setImageResource(_activePets[i].GetDrawableId(true));
 			

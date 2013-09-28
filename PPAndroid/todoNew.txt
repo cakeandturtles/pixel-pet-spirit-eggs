@@ -1,0 +1,97 @@
+TODO::
+***http://cakeandturtles.nfshost.com/games/spiritegg.php
+***Breeding and combining phenotypes -> Fancy Pigeons, dragon warrior monsters, digimon
+
+0. Add hp bar to hunger on view stats pages
+1. Change Inventory functionality back to how it was before
+2. Make more pets:: and make Spirit Pet personality test!!
+3. Get rid of personality attributes. Make pet food combinations evolve pets?
+1. MAKE PET CODEX:: Species & Scientific latin names.;; Type;; Pokedex fun fact;; Location;; Known evo paths
+4. Wandering around in real life (gps? step counter?) finds you new eggs??
+5. ADD TRASH and USE MULTIPLE and OTHER BUTTONS TO INV (like stated in EMAIL)
+6. Make it so when hatch notification is selected from the app state tray, that if you are currently in a quest, it instead throws a popup and asks you are you sure you want to abandon quest?
+7. PLAY with pet [CONNECT TAB]
+	-SINGLEPLAYER: Point & Click Adventure Scenarios based on their attributes and other pets. Build relationships
+	-Multiplayer: Trading and interacting like above?
+8. Add more areas (6 per page...)
+
+9. Make USER ACCOUNT SYSTEM AND STORE IN DATABASE!!!
+	-Make your trainer Avatar Customizable (Color palette and sprites
+10. [SHOP TAB] -> Shiny Eggs. Rare Eggs. Legendary Eggs. (Replace [TRAIN TAB])
+	-Golden/Shiny Fruits, to change your active pet's coloration!!!
+	-RANDOMIZED Eggs (Gold, Silver, Bronze, Gem colors, Shiny)
+11. Make Web client (Neopets Browser interface and Mobile-Only interface)
+12. Finish adding all the unique pets and evo branches (ADD TO CODEX)
+
+====================================================================================================
+-1. Transmedia::
+	A. Pixel Pet Card Game!!! Graphics from game/comic??? Battle System matching real game??
+	B. Pixel Pet Academy Comic :)
+	C. Pixel Pet WIKI!!!
+
+0. Start::
+	A. Personality Test like Pokemon Mystery Dungeon to see who your first pet should be!!!
+
+I. Collect Eggs::
+	A. Wander around and find Eggs.
+		1. Mobile/Web Exclusives
+	B. Trade/Give Eggs/Pets between Users
+	
+II. Raise Eggs/Pets::
+	A. When You're At Home::
+		1. Hatch Eggs (You can hold more eggs than you can Active Pets, When they hatch they go to Farm):
+			a. Warm/Pet the Egg
+			b. Shake the Egg
+			c. Tap the Egg
+			***Depending on how you play with the egg, the Pet's Personality Changes
+		2. Raise/Train your Pet:
+			c. Play with your Pet:: (Raises their stats very slightly)
+				i. PLAY-FIGHT:: Fight simulation virtual battles, and your stats are raised depending on what virtual pet (only 4ish virtual pets that aren't real pets (glitch type?)) you fight and how successful the fight is.
+				ii. PERSONALITY-PLAY/ADVENTURE:: (Affects your pet's personalities/Relationships between your pets)
+					!. Various scenarios happen with your pet 
+						("Dooble and Moonpie are digging a hole"/"Dooble asks you what your favorite color is")
+					@. Choose your reaction like Neopets/Choose your own Adventure Game, and this affects your Pet's Personality Stats
+		3. Petcyclopedia: View information about the various Pet Species
+	B. When You're On The Go::
+		1. Walking around, you can stumble across random EGGS!!! 
+			a. The App notifies you (like a text), and it says what kind of egg type you found, and it's stored in your inventory
+			b. Different Eggs can be found depending on the time of the day >_> (don't entice children to walk around outside at night though)
+		2. 
+		
+III. Interaction With Other Users
+	A. Battle::
+		1. Fight other players with your team of pets
+		2. Fight Bosses/Giant Creature with other people's teams
+		3. RPS Battle System
+			a. Each Pet has different stats::
+				i. HP
+				ii. Speed
+				iii. Attack
+				iv. Defense
+			b. Pet's Types:: (Each has own advantages/Disadvantages)
+				i. 		Plant
+				ii. 	Bug
+				iii.	Poison
+				iv. 	Bird
+				v. 		Water
+				vi. 	Earth
+				vii.	Wild
+				viii. 	Fire
+				ix. 	Glitch (secret)
+	B. Social Interaction::
+		1. Your pets interact with the other Users Pets (Similar Scenarios as above, only happening between the different kinds of pets)::
+			-Different scenarios/options appear dependent on your pet's personality traits (Make the scenarios and pet's have personalities like Hamtaro/Neopets/Artificial Life), and the interactions like Animal Crossing
+		2. Pet Personality Traits:: (Affects the relationships between the pets)
+			a. Generic Stats::
+				i. Shyness/Extroversion (Shy vs. Outgoing)
+				ii. Friendliness/Agreeableness (Friendly vs. Cold)
+				iii. Conscientiousness (Organized vs. Easy-Going)
+				iv. Neuroticism (Sensitive vs. Confident)
+				v. Openness (Curious vs. Cautious)
+			b. Likes/Dislikes:: (Use from the Character Generator)
+
+		
+====================================================================================================
+Necessary things::
+	-Active Team:: Three Active Pets
+	-Pet Farm/Foster's Home:: Your collection of other pets that you have

@@ -13,7 +13,6 @@ public class AdventureOption implements Serializable{
 	public int RelAniX;
 	public int RelAniY;
 	public PixelPet EggEncounter;
-	public int HPMod;
 	public int ExpForOption;
 	public boolean RestoresEnergy;
 	public int AmbitionModifier;
@@ -33,7 +32,6 @@ public class AdventureOption implements Serializable{
 		RelAniY = relAniY;
 		
 		EggEncounter = null;
-		HPMod = 0;
 		ExpForOption = exp;
 		RestoresEnergy = false;
 		
@@ -57,7 +55,6 @@ public class AdventureOption implements Serializable{
 		RelAniY = relAniY;
 		
 		EggEncounter = null;
-		HPMod = 0;
 		ExpForOption = exp;
 		RestoresEnergy = false;
 				

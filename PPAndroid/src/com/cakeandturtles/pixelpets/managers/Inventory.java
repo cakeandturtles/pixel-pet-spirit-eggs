@@ -6,12 +6,7 @@ import java.util.List;
 
 import com.cakeandturtles.pixelpets.items.Container;
 import com.cakeandturtles.pixelpets.items.PetItem;
-import com.cakeandturtles.pixelpets.items.PetItem.CollectableTypes;
-import com.cakeandturtles.pixelpets.items.artifacts.TreasurePocket;
-import com.cakeandturtles.pixelpets.items.battle.BattlePocket;
-import com.cakeandturtles.pixelpets.items.collectables.CollectablePocket;
 import com.cakeandturtles.pixelpets.items.fruits.FoodPocket;
-import com.cakeandturtles.pixelpets.items.medicine.MedicinePocket;
 
 public class Inventory implements Serializable{
 	private static final long serialVersionUID = -7172703434035869421L;
@@ -162,30 +157,13 @@ public class Inventory implements Serializable{
 	/////////////////////////////POCKET FUNCTIONS///////////////////////
 	private Container GetNewPocket(PetItem item){
 		if (item.CollectableType == PetItem.CollectableTypes.Food)
-			return new FoodPocket();
-		else if (item.CollectableType == PetItem.CollectableTypes.Medicine)
-			return new MedicinePocket();
-		else if (item.CollectableType == PetItem.CollectableTypes.Battle)
-			return new BattlePocket();
-		else if (item.CollectableType == PetItem.CollectableTypes.Treasure)
-			return new TreasurePocket();
-		else if (IsItemCollectable(item))
-			return new CollectablePocket();
-		
+			return new FoodPocket();		
 		return null;
 	}
 	
 	private Container GetExistingPocket(PetItem item){
 		if (item.CollectableType == PetItem.CollectableTypes.Food)
 			return (Container)getFromInventory(new FoodPocket());
-		else if (item.CollectableType == PetItem.CollectableTypes.Medicine)
-			return (Container)getFromInventory(new MedicinePocket());
-		else if (item.CollectableType == PetItem.CollectableTypes.Battle)
-			return (Container)getFromInventory(new BattlePocket());
-		else if (item.CollectableType == PetItem.CollectableTypes.Treasure)
-			return (Container)getFromInventory(new TreasurePocket());
-		else if (IsItemCollectable(item))
-			return (Container)getFromInventory(new CollectablePocket());
 		
 		return null;
 	}
@@ -193,8 +171,6 @@ public class Inventory implements Serializable{
 	private int addPocketedToInventory(PetItem item, Codex codex){
 		Container pocket = GetNewPocket(item);
 		Container realPocket = GetExistingPocket(item);
-		
-		addToCodex(item, codex);
 		
 		if (realPocket != null)
 			return realPocket.addToContainer(item, QuantityLimit);
@@ -204,22 +180,6 @@ public class Inventory implements Serializable{
 			return item.Quantity;
 		}else
 			return addCollectableToInventoryDirect(item);
-	}
-	
-
-	private void addToCodex(PetItem item, Codex codex){
-		if (item.CollectableType == CollectableTypes.Food)
-			codex.AddToFoodDex(item);
-		else if (item.CollectableType == CollectableTypes.Treasure)
-			codex.AddToTreasureDex(item);
-		else if (item.CollectableType == CollectableTypes.Leaf)
-			codex.AddToLeafDex(item);
-		else if (item.CollectableType == CollectableTypes.Mushroom)
-			codex.AddToShroomDex(item);
-		else if (item.CollectableType == CollectableTypes.Mineral)
-			codex.AddToMineralDex(item);
-		else if (item.CollectableType == CollectableTypes.Wildflower)
-			codex.AddToWildflowerDex(item);
 	}
 	
 	private void removeOnePocketedFromInventory(PetItem item){
@@ -241,16 +201,5 @@ public class Inventory implements Serializable{
 		if (realBag != null)
 			return realBag.getFromContainer(item);
 		else return getCollectableFromInventoryDirect(item);
-	}
-	
-	/////////////////////////////COLLECTABLE FUNCTIONS///////////////////////
-	private boolean IsItemCollectable(PetItem item)
-	{
-		if (item.CollectableType == PetItem.CollectableTypes.Leaf || 
-				item.CollectableType == PetItem.CollectableTypes.Mushroom || 
-				item.CollectableType == PetItem.CollectableTypes.Mineral ||
-				item.CollectableType == PetItem.CollectableTypes.Wildflower)
-			return true;
-		return false;
 	}
 }
