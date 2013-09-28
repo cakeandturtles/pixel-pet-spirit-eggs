@@ -1,0 +1,180 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AdventureActivity">
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"
+	    android:paddingTop="@dimen/activity_vertical_margin">
+
+    	<LinearLayout
+	    	android:id="@+id/pet_name_area"
+	    	android:layout_width="288dp"
+	    	android:layout_height="wrap_content"
+	    	android:weightSum="1.0"
+	    	android:baselineAligned="false">
+	    	<RelativeLayout 
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.5">
+	    		<TextView
+	        		android:id="@+id/pet_name"
+        			android:layout_width="wrap_content"
+        			android:layout_height="20dp"
+        			android:gravity="bottom"
+        			android:text="@string/pet_name"
+        			android:layout_marginLeft="-2dp"
+        			android:textAppearance="?android:attr/textAppearanceMedium" />
+    			<TextView
+				    android:id="@+id/pet_level"
+        			android:layout_width="wrap_content"
+        			android:layout_height="20dp"
+        			android:layout_marginLeft="5dp"
+        			android:layout_toRightOf="@id/pet_name"
+        			android:text="@string/pet_level" />
+    		</RelativeLayout>
+    		<RelativeLayout 
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.5">
+
+    			<View
+    			    android1:layout_width="wrap_content"
+    			    android1:layout_height="wrap_content" >
+
+</View>
+    		</RelativeLayout>
+    	</LinearLayout>
+    
+    <RelativeLayout
+        android:id="@+id/adventure_frame_area"
+        android:layout_width="wrap_content"
+        android:layout_height="128dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/pet_name_area"
+        android:layout_marginTop="14dp"
+        android:layout_gravity="center_horizontal">
+    	<ImageView
+	        android:id="@+id/pet_area"
+        	android:layout_width="128dp"
+        	android:layout_height="128dp"
+        	android:adjustViewBounds="false"
+        	android:contentDescription="@string/pet_adventure_description"
+        	android:onClick="TapPet"
+        	android:scaleType="matrix"
+        	android:src="@drawable/egg_sheet" />
+    	<ImageView
+	    	android:id="@+id/adventure_area"
+     		android:layout_width="128dp"
+       		android:layout_height="128dp"
+       		android:layout_toRightOf="@id/pet_area"
+       		android:layout_marginLeft="32dp"
+       		android:adjustViewBounds="false"
+       		android:contentDescription="@string/adventure_description"
+       		android:scaleType="matrix"
+       		android:src="@drawable/adventure_sheet" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/adventure_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adventure_frame_area"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="@string/adventure_description" />
+
+    <LinearLayout
+        android:id="@+id/button_row1"
+        android:weightSum="1.0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/adventure_description"
+        android:layout_below="@id/adventure_description" 
+        android:layout_marginTop="15dp" >
+
+        <Button 
+            android:id="@+id/adventure_button1"
+            android:layout_weight="0.5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:onClick="Option1" 
+            android:text="@string/adventure_button1"/>
+        <Button 
+            android:id="@+id/adventure_button2"
+            android:layout_weight="0.5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:onClick="Option2"  
+            android:text="@string/adventure_button2"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/button_row2"
+        android:weightSum="1.0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/button_row1"
+        android:layout_below="@id/button_row1"
+        android:layout_marginTop="0dp" >
+        <Button 
+            android:id="@+id/adventure_button3"
+            android:layout_weight="0.5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:onClick="Option3"  
+            android:text="@string/adventure_button3"/>
+        <Button 
+            android:id="@+id/adventure_button4"
+            android:layout_weight="0.5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:onClick="Option4" 
+            android:text="@string/adventure_button4"/>
+    </LinearLayout>
+    
+     <View
+        android:id="@+id/seperator1"
+    	android:layout_width="fill_parent"
+    	android:layout_height="0.5dp"
+    	android:layout_below="@id/button_row2"
+    	android:layout_marginTop="10dp"
+    	android:background="@android:color/darker_gray"/>
+    
+    <LinearLayout android:id="@+id/button_row3"
+        android:weightSum="1.0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/button_row1"
+        android:layout_below="@id/seperator1"
+        android:layout_marginTop="0dp" >
+        <Button
+	        android:id="@+id/adventure_again"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="0.5"
+        	android:layout_marginTop="10dp"
+        	android:gravity="center"
+        	android:onClick="AdventureAgain"
+        	android:text="@string/adventure_button" />
+    	<Button
+	        android:id="@+id/back_to_menu"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="0.5"
+        	android:layout_marginTop="10dp"
+        	android:gravity="center"
+        	android:onClick="BackToGarden"
+        	android:text="@string/back_to_map" />
+    </LinearLayout>
+</RelativeLayout>
+</ScrollView>

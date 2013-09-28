@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LearnNewMoveActivity">
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin"
+	    android:orientation="vertical" >
+	    
+	    <TextView
+        	android:id="@+id/pet_name"
+        	android:layout_width="wrap_content"
+        	android:layout_height="20dp"
+        	android:layout_alignParentLeft="true"
+        	android:gravity="bottom"
+        	android:text="@string/pet_name"
+        	android:textAppearance="?android:attr/textAppearanceMedium" />
+    	<TextView
+	        android:id="@+id/article"
+        	android:layout_width="wrap_content"
+        	android:layout_height="19dp"
+        	android:layout_marginLeft="5dp"
+        	android:layout_toRightOf="@id/pet_name"
+        	android:gravity="bottom"
+        	android:text="@string/article" />
+    	<TextView
+    	    android:id="@+id/pet_species"
+	        android:layout_width="wrap_content"
+        	android:layout_height="19dp"
+        	android:layout_marginLeft="4dp"
+        	android:layout_toRightOf="@id/article"
+        	android:gravity="bottom"
+        	android:text="@string/pet_species" />
+    	<RelativeLayout
+	        android:layout_width="fill_parent"
+        	android:layout_height="19dp"
+        	android:layout_toRightOf="@id/pet_species">
+    		<TextView
+		        android:id="@+id/pet_level"
+        		android:layout_width="wrap_content"
+        		android:layout_height="fill_parent"
+        		android:layout_marginLeft="10dp"
+        		android:layout_alignParentRight="true"
+        		android:layout_alignParentBottom="true"
+        		android:gravity="bottom"
+        		android:text="@string/pet_level" />
+    	</RelativeLayout>
+    	
+    	<TextView
+        	android:id="@+id/battle_type_title"
+        	android:layout_width="wrap_content"
+        	android:layout_height="20dp"
+        	android:gravity="bottom"
+        	android:layout_below="@id/pet_name"
+        	android:layout_marginTop="0dp"
+        	android:text="@string/battle_type_title" />
+    	<TextView
+	        android:id="@+id/primary_type"
+        	android:layout_width="wrap_content"
+        	android:layout_height="20dp"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginTop="0dp"
+        	android:layout_below="@id/pet_name"
+        	android:layout_toRightOf="@id/battle_type_title"
+        	android:gravity="bottom"
+        	android:text="@string/primary_type" 
+        	android:textAppearance="?android:attr/textAppearanceSmall"/>
+    	<TextView
+	        android:id="@+id/comma"
+        	android:layout_width="wrap_content"
+        	android:layout_height="20dp"
+        	android:layout_below="@id/pet_name"
+        	android:layout_toRightOf="@id/primary_type"
+        	android:gravity="bottom"
+        	android:text="@string/comma"
+        	android:textAppearance="?android:attr/textAppearanceSmall" />
+    	<TextView
+	        android:id="@+id/secondary_type"
+        	android:layout_width="wrap_content"
+        	android:layout_height="20dp"
+        	android:layout_marginLeft="3dp"
+        	android:layout_below="@id/pet_name"
+        	android:layout_toRightOf="@id/comma"
+        	android:gravity="bottom"
+        	android:text="@string/secondary_type"
+        	android:textAppearance="?android:attr/textAppearanceSmall" />
+	    	
+		<ImageView
+	    		android:id="@+id/pet_image_area"
+        		android:layout_width="128dp"
+        		android:layout_height="128dp"
+        		android:layout_below="@id/battle_type_title"
+        		android:adjustViewBounds="false"
+        		android:contentDescription="@string/pet_description"
+        		android:scaleType="matrix"
+        		android:clickable="true"
+        		android:onClick="TapPet"
+        		android:layout_centerHorizontal="true"
+        		android:src="@drawable/primary_sheet" />
+
+    	<TextView
+    	    android:id="@+id/attack_text_area"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/pet_image_area"
+    	    android:layout_centerHorizontal="true"
+    	    android:text="@string/new_attack_text"
+    	    android:textSize="18sp" />
+    	
+    	<View
+        	android:id="@+id/seperator1"
+    		android:layout_width="fill_parent"
+    		android:layout_height="1dp"
+    		android:layout_below="@id/attack_text_area"
+    		android:layout_marginTop="10dp"
+    		android:background="@android:color/darker_gray"/>
+    	
+    	<LinearLayout
+	        android:id="@+id/move_row0"
+        	android:weightSum="1.0"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_alignLeft="@id/pet_name"
+        	android:layout_marginTop="4dp"
+        	android:layout_below="@id/seperator1" >
+    		<View 
+    		    android:layout_weight="0.20"
+    		    android:layout_width="0dip"
+    		    android:layout_height="1dp"/>
+        	<Button 
+	            android:id="@+id/pet_move0"
+            	android:layout_weight="0.60"
+            	android:layout_width="0dip"
+            	android:layout_height="wrap_content"
+            	android:onClick="ViewMove0"
+            	android:text="@string/pet_move0"
+            	style="?android:attr/buttonStyleSmall"/>
+        	<View 
+    		    android:layout_weight="0.20"
+    		    android:layout_width="0dip"
+    		    android:layout_height="1dp"/>
+   		</LinearLayout>
+    	
+    	<View
+        	android:id="@+id/seperator2"
+    		android:layout_width="fill_parent"
+    		android:layout_height="1dp"
+    		android:layout_below="@id/move_row0"
+    		android:layout_marginTop="4dp"
+    		android:background="@android:color/darker_gray"/>
+   	
+   		<LinearLayout
+	        android:id="@+id/move_row1"
+        	android:weightSum="1.0"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_alignLeft="@id/pet_name"
+        	android:layout_marginTop="4dp"
+        	android:layout_below="@id/seperator2" >
+        	<Button 
+	            android:id="@+id/pet_move1"
+            	android:layout_weight="0.5"
+            	android:layout_width="0dip"
+            	android:layout_height="wrap_content"
+            	android:onClick="ViewMove1"
+            	android:text="@string/pet_move1"
+            	style="?android:attr/buttonStyleSmall"/>
+        	<Button 
+	            android:id="@+id/pet_move2"
+            	android:layout_weight="0.5"
+            	android:layout_width="0dip"
+            	android:layout_height="wrap_content"
+            	android:onClick="ViewMove2"
+            	android:text="@string/pet_move2"
+            	style="?android:attr/buttonStyleSmall"/>
+   		</LinearLayout>
+	   	
+	   	<LinearLayout
+        	android:id="@+id/move_row2"
+        	android:weightSum="1.0"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_alignLeft="@id/pet_name"
+        	android:layout_below="@id/move_row1" 
+        	android:layout_marginTop="0dp" >
+        	<Button 
+	            android:id="@+id/pet_move3"
+            	android:layout_weight="0.5"
+            	android:layout_width="0dip"
+            	android:layout_height="wrap_content"
+            	android:onClick="ViewMove3"
+            	android:text="@string/pet_move3"
+            	style="?android:attr/buttonStyleSmall"/>
+        	<Button 
+	            android:id="@+id/pet_move4"
+            	android:layout_weight="0.5"
+            	android:layout_width="0dip"
+            	android:layout_height="wrap_content"
+            	android:onClick="ViewMove4"
+            	android:text="@string/pet_move4"
+            	style="?android:attr/buttonStyleSmall"/>
+   		</LinearLayout>	    	
+   		
+	   	<View
+	        android:id="@+id/seperator3"
+    		android:layout_width="fill_parent"
+    		android:layout_height="0.5dp"
+    		android:layout_below="@id/move_row2"
+	    	android:layout_marginTop="4dp"
+    		android:background="@android:color/darker_gray"/>
+    
+	    <Button
+        	android:id="@+id/back_button"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/seperator3"
+        	android:layout_marginTop="20dp"
+        	android:gravity="center"
+        	android:onClick="BackButton"
+        	android:text="@string/forget_new_move" />
+	</RelativeLayout>
+</ScrollView>	

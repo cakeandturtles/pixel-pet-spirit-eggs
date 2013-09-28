@@ -1,0 +1,37 @@
+package com.cakeandturtles.pixelpets.attacks.insect;
+
+import java.util.Random;
+
+import com.cakeandturtles.pixelpets.attacks.Attack;
+import com.cakeandturtles.pixelpets.attacks.AttackResult;
+import com.cakeandturtles.pixelpets.attacks.BattleEffect;
+import com.cakeandturtles.pixelpets.pets.PixelPet;
+import com.cakeandturtles.pixelpets.pets.PixelPet.BattleType;
+
+public class BugBite extends Attack{
+	private static final long serialVersionUID = 4884825810588341610L;
+
+	public BugBite(){
+		super("Bug Bite", "Your pet annoyingly bites the foe, with a decent chance to lower their defense.", BattleType.Insect, 25, 100, 25);
+	}
+	
+	@Override
+	public AttackResult UseAttack(PixelPet user, PixelPet target, Attack lastUserAttack, Attack lastTargetAttack, Random appRandom, final PixelPet[] party)
+	{
+		/**Returns an array of three values: DamageToTarget Pet and DamageToUser Pet && TargetBattleEffect and UserBattleEffect && FIELD EFFECT**/
+		AttackResult attackResult = super.UseAttack(user, target, lastUserAttack, lastTargetAttack, appRandom, party);		
+		BattleEffect bugbiteEffect = new BattleEffect("BugBite", -1){
+			private static final long serialVersionUID = 8176331939418047088L;
+
+			@Override
+			public String ActivateEffect(PixelPet user, PixelPet target)
+			{
+				super.ActivateEffect(user, target);
+				return target.DebuffDefense(1);
+			}
+		};
+		if (appRandom.nextInt(2) == 0)
+			attackResult.Effect = bugbiteEffect;
+		return attackResult;
+	}
+}
