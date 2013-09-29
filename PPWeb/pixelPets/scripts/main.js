@@ -3,11 +3,10 @@ var hasCodex = false;
 
 var currTabUpdate = function(){};
 var tabThemeControl = function(){};
-var userPets = [
-	new PixelPet(Sprout)
-];
+var userPets = [];
 
 window.onload = function(){
+	userPets.push(GetRandomPet());
 	purpleTheme();
 	gotoMyPets();
 	setInterval(function(){mainUpdate()},60);

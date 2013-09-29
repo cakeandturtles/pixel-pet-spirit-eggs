@@ -1,9 +1,9 @@
 http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
 		
-1. 5 consecutive pets = happy animation (++happiness and ++experience)
-	-5 consecutive happy anis = irritated animation (----happiness and ++experience)
 2. Text box appears under happiness and exp after pet hatches, allowing you to talk to it and based on keywords or not will pick a random response in it's descriptions.
-3. Get new egg after first egg reaches adulthood.
-	-Breed pets?
+3. Breed pets?
 	-Chimerize Pets?
 4. Add codex
+5. Currently, user can switch tabs, and maintain a pets mood while their experience goes upp....???
+	-Make it so all pets are updated all the time in the main interval...
+	-Except for if there is a notification, don't update exp or mood!!! (unless it's just a rename)

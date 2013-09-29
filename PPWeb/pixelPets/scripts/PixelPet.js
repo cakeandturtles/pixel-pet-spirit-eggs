@@ -1,13 +1,36 @@
+var GetRandomPet = function(){
+	var rand = Math.floor(Math.random()*7);
+	if (rand == 0)
+		return new PixelPet(Hog);
+	else if (rand == 1)
+		return new PixelPet(Pillar);
+	else if (rand == 2)
+		return new PixelPet(Squirm);
+	else if (rand == 3)
+		return new PixelPet(Peep);
+	else if (rand == 4)
+		return new PixelPet(Sprout);
+	else if (rand == 5)
+		return new PixelPet(Blubby);
+	else if (rand == 6)
+		return new PixelPet(Glob);
+};
+
 var PixelPet = function(petSpeciesObj){
 	this.name = "???";
-	this.species = petSpeciesObj.species;
+	this.petSpeciesObj = petSpeciesObj;
+	this.speciesIndex = 0;
+	this.species = petSpeciesObj.species[0];
+	this.prevSpecies = this.species;
 	this.PetFormEnum = { EGG: "EGG", BABY: "BBY", ADOLESCENT: "ADO", ADULT: "ADU" };
 	this.petForm = this.PetFormEnum.EGG;
 	this.formChange = false;
 	this.currentDescription = "The egg is warm but doesn't move much.";
 	
+	this.wasHappyTeen = false;
 	this.mood = 0;
 	this.maxMood = 255;
+	this.emotion = 0;
 	
 	this.lastEventTime = new Date().getTime() / 1000; //In seconds
 	this.nextEventTime = this.lastEventTime + 60; //In seconds
@@ -36,7 +59,60 @@ var PixelPet = function(petSpeciesObj){
 		}
 	}
 	
+	this.BabyGrow = function(){
+		if (this.petForm == this.PetFormEnum.BABY){
+			this.petForm = this.PetFormEnum.ADOLESCENT;
+			if (this.mood >= 128){
+				this.wasHappyTeen = true;
+				this.aniY++;
+				this.speciesIndex++;
+			}else{
+				this.wasHappyTeen = false;
+				this.aniY += 2;
+				this.speciesIndex += 2;
+			}
+			this.species = this.petSpeciesObj.species[this.speciesIndex];
+		}
+	}
+	
+	this.AdolescentGrow = function(){
+		if (this.petForm == this.PetFormEnum.ADOLESCENT){
+			this.petForm = this.PetFormEnum.ADULT;
+			if (this.mood >= 128){
+				if (this.wasHappyTeen){
+					this.aniY += 2;
+					this.speciesIndex += 2;
+				}
+				else{ 
+					this.aniY += 3;
+					this.speciesIndex += 3;
+				}
+			}else{
+				if (this.wasHappyTeen){
+					this.aniY += 3;
+					this.speciesIndex += 3;
+				}
+				else{ 
+					this.aniY += 4;
+					this.speciesIndex += 4;
+				}
+			}
+			this.species = this.petSpeciesObj.species[this.speciesIndex];
+		}
+	}
+	
 	this.Update = function(imageId){
+		if (this.emotion > 0) this.emotion--;
+		if (this.emotion < 0) this.emotion++;
+		if (this.emotion > 0){ //ALTER MOOD
+			this.mood++;
+			this.expTimer++;
+		}
+		else if (this.emotion < 0)
+			this.mood--;
+		if (this.mood < 0) this.mood = 0;
+			if (this.mood > 255) this.mood = 255;
+	
 		this.UpdatePetForm();
 		this.UpdateDescriptionAndAnimationSpeed();
 		this.UpdateAnimation(imageId);
@@ -46,15 +122,28 @@ var PixelPet = function(petSpeciesObj){
 		var thisTime = new Date().getTime() / 1000;
 		this.expTimer += (thisTime - this.lastTime);
 		if (this.expTimer >= this.nextEventTime){
-			if (this.petForm == this.PetFormEnum.EGG){	
-				//PET HATCHED FROM THE EGG
+			this.lastEventTime = new Date().getTime() / 1000; //In seconds
+			this.expTimer = this.lastEventTime;
+			
+			if (this.petForm == this.PetFormEnum.EGG){	//PET HATCHED FROM THE EGG
 				this.EggHatched();
 				this.formChange = true;
+				
 				//SET LIMIT FOR EVOLUTION!!!
-				this.lastEventTime = new Date().getTime() / 1000; //In seconds
 				this.nextEventTime = this.lastEventTime + 240; //In seconds
-				this.expTimer = this.lastEventTime;
-			}else{
+			}else if (this.petForm == this.PetFormEnum.BABY){ //PET GROW FROM BABY TO TEEN
+				this.BabyGrow();
+				this.formChange = true;
+				
+				//SET LIMIT FOR EVOLUTION!!!
+				this.nextEventTime = this.lastEventTime + 480; //In seconds
+			}else if (this.petForm == this.PetFormEnum.ADOLESCENT){ //PET GROW FROM TEEN TO ADULT
+				this.AdolescentGrow();
+				this.formChange = true;
+				
+				//SET LIMIT FOR EVOLUTION!!!
+				this.nextEventTime = this.lastEventTime + 960; //In seconds
+			}else{ //PetFormEnum.ADULT
 			}
 		}
 		this.lastTime = thisTime;
@@ -87,13 +176,17 @@ var PixelPet = function(petSpeciesObj){
 			this.frameCountLimit = 12;
 			this.currentDescription = this.name + " is thrashing about!";
 		}
+		
+		if (this.emotion != 0)
+			this.frameCountLimit /= 2;
 	};
 	
 	this.UpdateAnimation = function(imageId){
 		if (++this.frameCount >= this.frameCountLimit){
 			this.frameCount = 0;
-			this.mood--; //DECREASE MOOD
+			this.mood--; 
 			if (this.mood < 0) this.mood = 0;
+			
 			if (++this.currFrame >= this.maxFrame){
 				this.currFrame = 0;
 			}
