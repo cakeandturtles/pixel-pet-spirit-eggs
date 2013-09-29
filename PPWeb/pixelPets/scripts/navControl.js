@@ -1,5 +1,5 @@
 var NavButtonEnum = {
-	MY_PETS: "myPets", INVENTORY: "inventory", GARDEN: "garden", CODEX: "codex"
+	MY_PETS: "myPets", CODEX: "codex"
 };
 
 var gotoMyPets = function(){
@@ -8,24 +8,6 @@ var gotoMyPets = function(){
 	
 	document.getElementById("mainBody").innerHTML = myPetsTabHTML;
 	myPetsTabScriptBegin();
-	setTheme();
-};
-
-var gotoInventory = function(){
-	stopTabSpecificScripts();
-	selectedNav = NavButtonEnum.INVENTORY;
-	
-	document.getElementById("mainBody").innerHTML = inventoryTabHTML;
-	inventoryTabScriptBegin();
-	setTheme();
-};
-
-var gotoGarden = function(){
-	stopTabSpecificScripts();
-	selectedNav = NavButtonEnum.GARDEN;
-	
-	document.getElementById("mainBody").innerHTML = gardenTabHTML;
-	gardenTabScriptBegin();
 	setTheme();
 };
 
@@ -42,12 +24,6 @@ var stopTabSpecificScripts = function(){
 	switch(selectedNav){
 		case NavButtonEnum.MY_PETS:
 			myPetsTabScriptEnd();
-			break;
-		case NavButtonEnum.INVENTORY:
-			inventoryTabScriptEnd();
-			break;
-		case NavButtonEnum.GARDEN:
-			gardenTabScriptEnd();
 			break;
 		case NavButtonEnum.CODEX:
 			codexTabScriptEnd();

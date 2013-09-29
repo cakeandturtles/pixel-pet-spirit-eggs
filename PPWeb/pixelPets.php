@@ -9,8 +9,6 @@
 		
 		<!--Contains HTML information and specific var/scripts for Navigation Tabs-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/MyPetsTab.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/InventoryTab.js"></script>
-		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/GardenTab.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/CodexTab.js"></script>
 		<!--Controls theme and associated font/background. Includes whiteout of selected Nav Button-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/styleControl.js"></script>
@@ -25,8 +23,6 @@
 			<div id="navigation">
 				<br/>
 				<div id="myPetsButton" class="navButton" onclick="gotoMyPets();">MY PETS</div>
-				<div id="gardenButton" class="navButton" onclick="gotoGarden();">GARDEN</div>
-				<div id="inventoryButton" class="navButton" onclick="gotoInventory();">INVENTORY</div>
 				<div id="codexButton" class="navButton"  onclick="gotoCodex();">CODEX</div>
 			</div>
 			<div id="ppMain"><div id="mainBody">				

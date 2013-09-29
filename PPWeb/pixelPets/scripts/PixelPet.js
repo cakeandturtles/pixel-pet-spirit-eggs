@@ -6,14 +6,13 @@ var PixelPet = function(petSpeciesObj){
 	this.formChange = false;
 	this.currentDescription = "The egg is warm but doesn't move much.";
 	
-	this.ambition = 0;
-	this.empathy = 0;
-	this.insight = 0;
-	this.diligence = 0;
-	this.charm = 0;
+	this.mood = 0;
+	this.maxMood = 255;
 	
-	this.timeEggFound = new Date().getTime() / 1000; //In seconds
-	this.timeEggHatched = this.timeEggFound;// + 60; //In seconds
+	this.lastEventTime = new Date().getTime() / 1000; //In seconds
+	this.nextEventTime = this.lastEventTime + 60; //In seconds
+	this.expTimer = this.lastEventTime;
+	this.lastTime = this.lastEventTime;
 
 	this.frameCount = 0;
 	this.frameCountLimit = 10;
@@ -44,25 +43,40 @@ var PixelPet = function(petSpeciesObj){
 	};
 	
 	this.UpdatePetForm = function(){
-		if (this.petForm == this.PetFormEnum.EGG){
-			var currentSeconds = new Date().getTime() / 1000; //In seconds..
-			if (currentSeconds >= this.timeEggHatched){
+		var thisTime = new Date().getTime() / 1000;
+		this.expTimer += (thisTime - this.lastTime);
+		if (this.expTimer >= this.nextEventTime){
+			if (this.petForm == this.PetFormEnum.EGG){	
 				//PET HATCHED FROM THE EGG
 				this.EggHatched();
 				this.formChange = true;
+				//SET LIMIT FOR EVOLUTION!!!
+				this.lastEventTime = new Date().getTime() / 1000; //In seconds
+				this.nextEventTime = this.lastEventTime + 240; //In seconds
+				this.expTimer = this.lastEventTime;
+			}else{
 			}
-		}else{
 		}
+		this.lastTime = thisTime;
+	};
+	
+	this.GetMoodRatio = function(){
+		return Math.round((this.mood/this.maxMood)*126.0);
+	};
+	
+	this.GetExpRatio = function(){
+		var expRatio = (this.expTimer-this.lastEventTime) / (this.nextEventTime-this.lastEventTime);
+		return Math.round(expRatio * 126.0);
 	};
 	
 	this.UpdateDescriptionAndAnimationSpeed = function(){
 		if (this.petForm == this.PetFormEnum.EGG){
-			var timeHatched = this.timeEggHatched - this.timeEggFound;
-			var currTime = new Date().getTime() / 1000 - this.timeEggFound;
-			if (currTime >= (timeHatched * 2.0) / 4.0){
+			var timeHatched = this.nextEventTime - this.lastEventTime;
+			var currTime = this.expTimer - this.lastEventTime;
+			if (currTime >= (timeHatched * 3.0) / 4.0){
 				this.frameCountLimit = 12;
 				this.currentDescription = "It moves around a lot<br/>It must be close to hatching!";
-			}else if (currTime >= timeHatched / 4.0){
+			}else if (currTime >= timeHatched * 1.5 / 4.0){
 				this.frameCountLimit = 60;
 				this.currentDescription = "It wiggles around now and then.";
 			}else{		
@@ -78,8 +92,11 @@ var PixelPet = function(petSpeciesObj){
 	this.UpdateAnimation = function(imageId){
 		if (++this.frameCount >= this.frameCountLimit){
 			this.frameCount = 0;
-			if (++this.currFrame >= this.maxFrame)
+			this.mood--; //DECREASE MOOD
+			if (this.mood < 0) this.mood = 0;
+			if (++this.currFrame >= this.maxFrame){
 				this.currFrame = 0;
+			}
 		}
 
 		var petImage = document.getElementById(imageId);

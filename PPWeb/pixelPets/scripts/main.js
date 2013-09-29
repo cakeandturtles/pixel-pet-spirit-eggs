@@ -1,15 +1,10 @@
 var selectedNav;
-var hasInventory = false;
-var hasGarden = false;
 var hasCodex = false;
 
 var currTabUpdate = function(){};
 var tabThemeControl = function(){};
 var userPets = [
-	new PixelPet(Sprout),
-	new PixelPet(Glob),
-	new PixelPet(Peep),
-	new PixelPet(Squirm)
+	new PixelPet(Sprout)
 ];
 
 window.onload = function(){
