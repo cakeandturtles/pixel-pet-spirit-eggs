@@ -6,6 +6,7 @@
 		<!--Declaration of PixelPet class and species-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PixelPet.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PetSpecies.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PetResponses.js"></script>
 		
 		<!--Contains HTML information and specific var/scripts for Navigation Tabs-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/MyPetsTab.js"></script>
@@ -18,14 +19,18 @@
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/main.js"></script>
 	</head>
 	<body>
-		<br/><br/>
+		<br/>
+		<div style="width:440px; margin: 0px auto;margin-bottom:5px;font-weight:bold;">Pixel Pets: Pet and Talk to Virtual Pets!!</div>
 		<div id="organizer">
 			<div id="navigation">
 				<br/>
 				<div id="myPetsButton" class="navButton" onclick="gotoMyPets();">MY PETS</div>
 				<div id="codexButton" class="navButton"  onclick="gotoCodex();">CODEX</div>
 			</div>
-			<div id="ppMain"><div id="mainBody">				
+			<div id="ppMain"><div id="mainBody">
+				Please wait!!!<br/><br/>
+				Loading...<br/><br/>
+				Please wait!!!
 			</div></div>
 			<div class="clearer"></div>
 			<div id="footer">

@@ -57,7 +57,7 @@ body{
 	border-width:1px; 
 	border-color:#000000; 
 	margin:0px auto;
-	padding: 4px;
+	padding: 8px;
 	
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -69,6 +69,27 @@ body{
 .genericPetImage{
 	width: 128px;
 	height: 128px;
+	background-image: url('images/eggs_and_pets_big.png');
+}
+.genericPetImageHappy{
+	width: 128px;
+	height: 128px;
+	background-image: url("images/eggs_and_pets_happy_big.png");
+}
+.genericPetImageSad{
+	width: 128px;
+	height: 128px;
+	background-image: url("images/eggs_and_pets_sad_big.png");
+}
+.genericPetImageTicked{
+	width: 128px;
+	height: 128px;
+	background-image: url("images/eggs_and_pets_ticked_big.png");
+}
+.genericPetImageAngry{
+	width: 128px;
+	height: 128px;
+	background-image: url("images/eggs_and_pets_mad_big.png");
 }
 #footer{
 	font-size: 12px;

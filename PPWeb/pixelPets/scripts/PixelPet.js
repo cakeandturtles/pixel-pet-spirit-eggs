@@ -1,21 +1,3 @@
-var GetRandomPet = function(){
-	var rand = Math.floor(Math.random()*7);
-	if (rand == 0)
-		return new PixelPet(Hog);
-	else if (rand == 1)
-		return new PixelPet(Pillar);
-	else if (rand == 2)
-		return new PixelPet(Squirm);
-	else if (rand == 3)
-		return new PixelPet(Peep);
-	else if (rand == 4)
-		return new PixelPet(Sprout);
-	else if (rand == 5)
-		return new PixelPet(Blubby);
-	else if (rand == 6)
-		return new PixelPet(Glob);
-};
-
 var PixelPet = function(petSpeciesObj){
 	this.name = "???";
 	this.petSpeciesObj = petSpeciesObj;
@@ -26,16 +8,20 @@ var PixelPet = function(petSpeciesObj){
 	this.petForm = this.PetFormEnum.EGG;
 	this.formChange = false;
 	this.currentDescription = "The egg is warm but doesn't move much.";
+	this.talkResponse = 0;
+	
+	this.PetCounter = 0;
+	this.PetPetCounter = 0;
+	this.AntiPetPetCounter = 0;
 	
 	this.wasHappyTeen = false;
 	this.mood = 0;
 	this.maxMood = 255;
 	this.emotion = 0;
 	
-	this.lastEventTime = new Date().getTime() / 1000; //In seconds
-	this.nextEventTime = this.lastEventTime + 60; //In seconds
-	this.expTimer = this.lastEventTime;
-	this.lastTime = this.lastEventTime;
+	this.lastEventTime = 0;
+	this.nextEventTime = 120; //In seconds
+	this.expTimer = 0;
 
 	this.frameCount = 0;
 	this.frameCountLimit = 10;
@@ -56,6 +42,7 @@ var PixelPet = function(petSpeciesObj){
 		if (this.petForm == this.PetFormEnum.EGG){
 			this.petForm = this.PetFormEnum.BABY;
 			this.aniY++;
+			this.mood = 132;
 		}
 	}
 	
@@ -106,12 +93,15 @@ var PixelPet = function(petSpeciesObj){
 		if (this.emotion < 0) this.emotion++;
 		if (this.emotion > 0){ //ALTER MOOD
 			this.mood++;
-			this.expTimer++;
+			this.expTimer+=1;
 		}
 		else if (this.emotion < 0)
 			this.mood--;
 		if (this.mood < 0) this.mood = 0;
-			if (this.mood > 255) this.mood = 255;
+		if (this.mood > 255) this.mood = 255;
+		
+		if (this.talkResponse > 0)
+			this.talkResponse--;
 	
 		this.UpdatePetForm();
 		this.UpdateDescriptionAndAnimationSpeed();
@@ -119,11 +109,15 @@ var PixelPet = function(petSpeciesObj){
 	};
 	
 	this.UpdatePetForm = function(){
-		var thisTime = new Date().getTime() / 1000;
-		this.expTimer += (thisTime - this.lastTime);
+		this.expTimer+=0.1;
 		if (this.expTimer >= this.nextEventTime){
-			this.lastEventTime = new Date().getTime() / 1000; //In seconds
-			this.expTimer = this.lastEventTime;
+			this.lastEventTime = 0; 
+			this.expTimer = 0;
+			this.emotion = 0;
+			this.PetCounter = 0;
+			this.PetPetCounter = 0;
+			this.AntiPetPetCounter = 0;
+			this.talkResponse = 0;
 			
 			if (this.petForm == this.PetFormEnum.EGG){	//PET HATCHED FROM THE EGG
 				this.EggHatched();
@@ -142,11 +136,10 @@ var PixelPet = function(petSpeciesObj){
 				this.formChange = true;
 				
 				//SET LIMIT FOR EVOLUTION!!!
-				this.nextEventTime = this.lastEventTime + 960; //In seconds
+				this.nextEventTime = this.lastEventTime + 560; //In seconds
 			}else{ //PetFormEnum.ADULT
 			}
 		}
-		this.lastTime = thisTime;
 	};
 	
 	this.GetMoodRatio = function(){
@@ -164,17 +157,39 @@ var PixelPet = function(petSpeciesObj){
 			var currTime = this.expTimer - this.lastEventTime;
 			if (currTime >= (timeHatched * 3.0) / 4.0){
 				this.frameCountLimit = 12;
-				this.currentDescription = "It moves around a lot<br/>It must be close to hatching!";
+				if (this.talkResponse == 0)
+					this.currentDescription = "It moves around a lot<br/>It must be close to hatching!";
 			}else if (currTime >= timeHatched * 1.5 / 4.0){
 				this.frameCountLimit = 60;
-				this.currentDescription = "It wiggles around now and then.";
+				if (this.talkResponse == 0)
+					this.currentDescription = "It wiggles around now and then.";
 			}else{		
 				this.frameCountLimit = 120;
-				this.currentDescription = "The egg is warm but doesn't move much.";
+				if (this.talkResponse == 0)
+					this.currentDescription = "The egg is warm but doesn't move much.";
 			}
 		}else{
 			this.frameCountLimit = 12;
-			this.currentDescription = this.name + " is thrashing about!";
+			
+			if (this.talkResponse == 0){
+				if (this.emotion < 0)
+					this.currentDescription = "You've upset " + this.name + "!!!<br/>>:( &nbsp;>:( &nbsp;>:(";
+				else if (this.emotion > 0)
+					this.currentDescription = this.name + " is very happy :D!!!";
+				else{
+					if (this.PetPetCounter >= 4){
+						this.currentDescription = this.name + " is irritated... >:(<br/>Leave him be for a second?";
+					}else if (this.mood < 128){
+						if (this.mood < 64){
+							this.currentDescription = this.name + " is crying :,(!!";
+						}else{
+							this.currentDescription = this.name + " is feeling lonely :(";
+						}
+					}else{
+						this.currentDescription = this.name + " is thrashing about :)!";
+					}
+				}	
+			}
 		}
 		
 		if (this.emotion != 0)
@@ -190,10 +205,24 @@ var PixelPet = function(petSpeciesObj){
 			if (++this.currFrame >= this.maxFrame){
 				this.currFrame = 0;
 			}
+		}else if (this.frameCount >= this.frameCountLimit-1){
+			this.PetCounter--;
+			if (this.PetCounter < 0)
+				this.PetCounter = 0;
+		
+			if (this.emotion == 0){
+				this.AntiPetPetCounter++;
+				if (this.AntiPetPetCounter >= 10){
+					this.AntiPetPetCounter = 0;
+					this.PetPetCounter = 0;
+				}
+			}
 		}
 
-		var petImage = document.getElementById(imageId);
-		var petSpriteSettings = ""+((-1)*((this.frameWidth*this.currFrame)+(this.frameWidth*this.aniX)))+"px "+((-1)*this.frameHeight*this.aniY)+"px";
-		petImage.style.backgroundPosition=petSpriteSettings;
+		if (imageId != ""){
+			var petImage = document.getElementById(imageId);
+			var petSpriteSettings = ""+((-1)*((this.frameWidth*this.currFrame)+(this.frameWidth*this.aniX)))+"px "+((-1)*this.frameHeight*this.aniY)+"px";
+			petImage.style.backgroundPosition=petSpriteSettings;
+		}
 	};
 };
