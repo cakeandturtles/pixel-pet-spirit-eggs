@@ -6,7 +6,7 @@ body{
 	position:relative;
 	margin: 0px auto;
 	width: 642px;
-	height: 480px;
+	height: 520px;
 }
 #navigation{
 	float: left;
@@ -33,11 +33,34 @@ body{
 	-moz-user-select: none; /* Firefox */
 	-ms-user-select: none; /* IE10+ */
 }
+.navButtonCodex{
+	width: 45px;
+	background: #dddddd;
+	font-size: 10px;
+	font-weight: bold;
+	text-align: center;
+	cursor:pointer;
+	float: left;
+	
+	margin-right:4px;
+	margin-bottom:10px;
+	padding:3px;
+	padding-top:8px;
+	padding-bottom:8px;
+	
+	border-style:solid;
+	border-width:1px;
+	border-color:#000000;
+	
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
 #ppMain{
 	float: left;
 	background: #dddddd;
 	width: 540px;
-	height: 480px;
+	height: 520px;
 	text-align:center;
 	
 	/*border-style:solid;
@@ -66,6 +89,11 @@ body{
 	-ms-user-select: none;
 	user-select: none;
 }
+.unknownPetImage{
+	width: 128px;
+	height: 128px;
+	background-image: url('images/unknown.png');
+}
 .genericPetImage{
 	width: 128px;
 	height: 128px;
@@ -90,6 +118,27 @@ body{
 	width: 128px;
 	height: 128px;
 	background-image: url("images/eggs_and_pets_mad_big.png");
+}
+.codexImageContainer{
+	cursor: pointer;
+	width:128px; 
+	height:128px;
+	background:rgb(255, 255, 255);
+	background:rgba(255, 255, 255, 0.7); 
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#000000; 
+	
+	padding: 8px;
+	margin: 4px;
+	float: left;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 #footer{
 	font-size: 12px;

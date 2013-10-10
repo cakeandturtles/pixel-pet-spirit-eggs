@@ -1,9 +1,11 @@
 http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
 
-3. Add codex
-4. Add saving!!!
-5. Adults die upon reaching max exp...
-7. ENTER to close notifications
-
-2. Breed pets?
-	-Chimerize Pets?
+1. Add saving!!!
+2. Notification on MY PETS tab button when something happens... (!!! > ...)
+3. Really need to do palette colorization and not have 6 giant images..
+	-Otherwise fix bloomer images on other 5 images
+4. ENTER to close notifications
+5. That sweet horiz-scroll bar pops up on my pets but disappears on codex...
+6. Pause pet (or all pets) when naming pet first time?
+	-Make a pause
+7. How to not slow down when not active Tab???

@@ -5,6 +5,11 @@ var resetNavButtons = function(){
 		navButtons[i].style.background = lightColor;
 		navButtons[i].style.color = fontColor;
 	}
+	navButtons = getElementsByClass("navButtonCodex");
+	for (var i = 0; i < navButtons.length; i++){
+		navButtons[i].style.background = lightColor;
+		navButtons[i].style.color = fontColor;
+	}
 };
 
 var setNavButton = function(navName){

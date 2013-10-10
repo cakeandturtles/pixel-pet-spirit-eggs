@@ -1,13 +1,19 @@
 var PixelPet = function(petSpeciesObj){
-	this.name = "???";
+	this.inCodex = false;
+	this.checkedIntoCodex = false;
+	
+	this.canRelease = false;
 	this.petSpeciesObj = petSpeciesObj;
 	this.speciesIndex = 0;
 	this.species = petSpeciesObj.species[0];
+	this.name = this.species;
+	this.eggSpecies = petSpeciesObj.eggSpecies;
 	this.prevSpecies = this.species;
 	this.PetFormEnum = { EGG: "EGG", BABY: "BBY", ADOLESCENT: "ADO", ADULT: "ADU" };
 	this.petForm = this.PetFormEnum.EGG;
 	this.formChange = false;
 	this.currentDescription = "The egg is warm but doesn't move much.";
+	this.codexDescription = "TODO";
 	this.talkResponse = 0;
 	
 	this.PetCounter = 0;
@@ -38,11 +44,23 @@ var PixelPet = function(petSpeciesObj){
 		return this.name + " the " + this.species;
 	};
 	
+	this.RevertToEgg = function(){
+		if (this.petForm == this.PetFormEnum.ADULT){
+			this.frameCount = 0;
+			this.currFrame = 0;
+			this.petForm = this.PetFormEnum.EGG;
+			this.speciesIndex = 0;
+			this.species = this.petSpeciesObj.species[this.speciesIndex];
+			this.aniY = 0;
+		}
+	};
+	
 	this.EggHatched = function(){
 		if (this.petForm == this.PetFormEnum.EGG){
 			this.petForm = this.PetFormEnum.BABY;
 			this.aniY++;
 			this.mood = 132;
+			this.checkedIntoCodex = false;
 		}
 	}
 	
@@ -59,11 +77,13 @@ var PixelPet = function(petSpeciesObj){
 				this.speciesIndex += 2;
 			}
 			this.species = this.petSpeciesObj.species[this.speciesIndex];
+			this.checkedIntoCodex = false;
 		}
 	}
 	
 	this.AdolescentGrow = function(){
 		if (this.petForm == this.PetFormEnum.ADOLESCENT){
+			this.canRelease = true;
 			this.petForm = this.PetFormEnum.ADULT;
 			if (this.mood >= 128){
 				if (this.wasHappyTeen){
@@ -85,6 +105,7 @@ var PixelPet = function(petSpeciesObj){
 				}
 			}
 			this.species = this.petSpeciesObj.species[this.speciesIndex];
+			this.checkedIntoCodex = false;
 		}
 	}
 	
@@ -138,6 +159,11 @@ var PixelPet = function(petSpeciesObj){
 				//SET LIMIT FOR EVOLUTION!!!
 				this.nextEventTime = this.lastEventTime + 560; //In seconds
 			}else{ //PetFormEnum.ADULT
+				this.RevertToEgg();
+				this.formChange = true;
+				
+				//SET LIMIT FOR EGG HATCH
+				this.nextEventTime = 160; //In seconds
 			}
 		}
 	};
@@ -177,15 +203,16 @@ var PixelPet = function(petSpeciesObj){
 				else if (this.emotion > 0)
 					this.currentDescription = this.name + " is very happy :D!!!";
 				else{
-					if (this.PetPetCounter >= 4){
-						this.currentDescription = this.name + " is irritated... >:(<br/>Leave him be for a second?";
-					}else if (this.mood < 128){
+					if (this.mood < 128){
 						if (this.mood < 64){
 							this.currentDescription = this.name + " is crying :,(!!";
 						}else{
 							this.currentDescription = this.name + " is feeling lonely :(";
 						}
-					}else{
+					}else if (this.PetPetCounter >= 4){
+						this.currentDescription = this.name + " is irritated... >:(<br/>Leave him be for a second?";
+					}
+					else{
 						this.currentDescription = this.name + " is thrashing about :)!";
 					}
 				}	
@@ -194,6 +221,11 @@ var PixelPet = function(petSpeciesObj){
 		
 		if (this.emotion != 0)
 			this.frameCountLimit /= 2;
+	};
+	
+	this.ResetAnimation = function(){
+		this.frameCount = 0;
+		this.currFrame = 0;
 	};
 	
 	this.UpdateAnimation = function(imageId){

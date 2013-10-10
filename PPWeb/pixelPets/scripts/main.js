@@ -1,5 +1,5 @@
 var selectedNav;
-var hasCodex = false;
+var hasCodex = true;//false;
 
 var currTabUpdate = function(){};
 var tabThemeControl = function(){};
@@ -11,6 +11,7 @@ var img3 = new Image().src = 'pixelPets/images/eggs_and_pets_mad_big.png';
 
 window.onload = function(){
 	userPets.push(GetRandomPet());
+	InitializeCodex();
 	purpleTheme();
 	gotoMyPets();
 	setInterval(function(){mainUpdate()},60);
@@ -21,12 +22,17 @@ var mainUpdate = function(){
 	currTabUpdate();
 	titleNotify();
 	updateNavButtonVisibility();
+	updateCodex();
 	
 	for (var i = 0; i < userPets.length; i++){
-		if (userPets[i] == myPetsTabPet){
-			if (nameNotification)
-				myPetsTabPet.Update("myPetsTabPetImageNotify");
-			else myPetsTabPet.Update("myPetsTabPetImage");
+		if (selectedNav == NavButtonEnum.MY_PETS){
+			if (userPets[i] == myPetsTabPet){
+				if (nameNotification)
+					myPetsTabPet.Update("myPetsTabPetImageNotify");
+				else myPetsTabPet.Update("myPetsTabPetImage");
+			}else{
+				userPets[i].Update("");
+			}
 		}else{
 			userPets[i].Update("");
 		}
@@ -97,6 +103,7 @@ var closeNotification = function() {
 		}
 		
 		if (userPets.length <= 0){ //YOU NEED A NEW PET!!!
+			myPetsTabSelectedTab = "Pet1";
 			userPets.push(GetRandomPet());
 			doTitleNotify = true;
 			titleKeeper = "Hello Mysterious Egg!!!    ";

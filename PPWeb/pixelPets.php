@@ -8,6 +8,18 @@
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PetSpecies.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PetResponses.js"></script>
 		
+		<!--Declaration/Management of Codex and the Codex entries-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/PupCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/HogCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/PillarCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/SquirmCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/PeepCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/SproutCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/BlubbyCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/GlobCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex/DribbleCodex.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/Codex.js"></script>
+		
 		<!--Contains HTML information and specific var/scripts for Navigation Tabs-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/MyPetsTab.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navTabs/CodexTab.js"></script>

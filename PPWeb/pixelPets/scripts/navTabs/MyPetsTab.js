@@ -108,7 +108,7 @@ var myPetsTabSetUpPetBody = function(){
 	document.getElementById("myPetsTabLevel").innerHTML = "Lvl. " + myPetsTabPet.petForm
 	document.getElementById("myPetsTabPetDescription").innerHTML = myPetsTabPet.currentDescription;
 	
-	if (myPetsTabPet.petForm == "ADU"){
+	if (myPetsTabPet.petForm != "EGG" && myPetsTabPet.canRelease){
 		document.getElementById("myPetsTabReleasePet").style.visibility = "visible";
 	}
 	else{
@@ -126,7 +126,7 @@ var myPetsTabNameNotify = function(justHatched){
 	
 	
 	var note = document.getElementById("notificationBody");
-	var noteHTML = "<div class='genericPetImageContainer' style='cursor:default;'>";
+	var noteHTML = "<div class='genericPetImageContainer' style='cursor:default;margin-top:5px;'>";
 	noteHTML += "<div id=\"myPetsTabPetImageNotify\" class='genericPetImage'></div>";
 	noteHTML += "</div><br/>";
 	
@@ -135,7 +135,6 @@ var myPetsTabNameNotify = function(justHatched){
 			noteHTML += "A " + myPetsTabPet.species + " just hatched from the egg!";
 			noteHTML += "<br/><br/>What would you like to name your new " + myPetsTabPet.species + "?";
 			titleKeeper = " " + myPetsTabPet.species + " has hatched!    ";
-			defaultName = myPetsTabPet.species;
 			myPetsTabPet.name = defaultName;
 			hasCodex = true;
 		}else{
@@ -146,22 +145,31 @@ var myPetsTabNameNotify = function(justHatched){
 		noteHTML += "<br/><br/><input id='myPetsTabNameForm' type='text' value='"+defaultName+"' maxlength='12' onKeyPress='myPetsTabNameEnter(event);' />";
 		noteHTML += "<br/><div class='actionButton' style='float:none;width:80px;margin:0px auto;margin-top:10px;' onclick='myPetsTabNamePet();'>Name Pet</div>";
 	}else{
-		titleKeeper = " " + myPetsTabPet.name + " evolved!    ";
-		noteHTML += myPetsTabPet.name + " is beginning to change!<br/>";
-		noteHTML += "...<br/>";
-		noteHTML += "....<br/>";
-		noteHTML += ".....<br/>";
-		noteHTML += "<div style='margin-top:5px;'>" + myPetsTabPet.name + " evolved into " + myPetsTabPet.species + "!</div>";
-		if (myPetsTabPet.name == myPetsTabPet.prevSpecies){
-			myPetsTabPet.name = myPetsTabPet.species;
-			myPetsTabPet.prevSpecies = myPetsTabPet.species;
-		}
-		if (myPetsTabPet.petForm == "ADU"){
-			noteHTML += "<br/>Interestingly enough...<div style='margin-top:5px;'>" + myPetsTabPet.name + " laid an egg!</div>";
-			if (userPets.length < 4)
-				userPets.push(GetRandomPet());
-			else
-				noteHTML += "<br/>But you have no room for it...";
+		if (myPetsTabPet.petForm == "EGG"){
+			titleKeeper = " " + myPetsTabPet.name + " has passed away!    ";
+			noteHTML += myPetsTabPet.name + " has had a good life. But it's time for them to pass on.<br/>";
+			noteHTML += "...<br/>";
+			noteHTML += "....<br/>";
+			noteHTML += ".....<br/>";
+			noteHTML += "<div style='margin-top:5px;'>" + myPetsTabPet.name + " has changed back into an egg!</div>";
+		}else{
+			titleKeeper = " " + myPetsTabPet.name + " evolved!    ";
+			noteHTML += myPetsTabPet.name + " is beginning to change!<br/>";
+			noteHTML += "...<br/>";
+			noteHTML += "....<br/>";
+			noteHTML += ".....<br/>";
+			noteHTML += "<div style='margin-top:5px;'>" + myPetsTabPet.name + " evolved into " + myPetsTabPet.species + "!</div>";
+			if (myPetsTabPet.name == myPetsTabPet.prevSpecies){
+				myPetsTabPet.name = myPetsTabPet.species;
+				myPetsTabPet.prevSpecies = myPetsTabPet.species;
+			}
+			if (myPetsTabPet.petForm == "ADU"){
+				noteHTML += "<br/>Interestingly enough...<div style='margin-top:5px;'>" + myPetsTabPet.name + " laid an egg!</div>";
+				if (userPets.length < 4)
+					userPets.push(GetRandomPet());
+				else
+					noteHTML += "<br/>But you have no room for it...";
+			}
 		}
 		noteHTML += "<br/><div class='actionButton' style='float:none;width:80px;margin:0px auto; margin-top:10px;' onclick='closeNotification();'>Okay</div>";
 	}
@@ -230,6 +238,8 @@ var myPetsTabPetPet = function(){
 				
 				myPetsTabPet.emotion = 40;
 			}
+		}else{
+			myPetsTabPet.expTimer++;
 		}
 	}
 };
