@@ -159,10 +159,6 @@ var myPetsTabNameNotify = function(justHatched){
 			noteHTML += "....<br/>";
 			noteHTML += ".....<br/>";
 			noteHTML += "<div style='margin-top:5px;'>" + myPetsTabPet.name + " evolved into " + myPetsTabPet.species + "!</div>";
-			if (myPetsTabPet.name == myPetsTabPet.prevSpecies){
-				myPetsTabPet.name = myPetsTabPet.species;
-				myPetsTabPet.prevSpecies = myPetsTabPet.species;
-			}
 			if (myPetsTabPet.petForm == "ADU"){
 				noteHTML += "<br/>Interestingly enough...<div style='margin-top:5px;'>" + myPetsTabPet.name + " laid an egg!</div>";
 				if (userPets.length < 4)
@@ -206,6 +202,35 @@ var myPetsTabNameEnter = function(e){
 };
 var myPetsTabNamePet = function(){
 	var petName = document.getElementById("myPetsTabNameForm").value;
+	petName = petName.replace(/\,/g,""); //Remove commas
+	petName = petName.replace(/\&/g,""); //Remove &s
+	petName = petName.replace(/\=/g,""); //Remove =s
+	petName = petName.replace(/\./g,""); //Remove periods
+	petName = petName.replace(/\@/g,""); //Remove @s
+	petName = petName.replace(/\</g,""); //Remove <s
+	petName = petName.replace(/\>/g,""); //Remove >s
+	petName = petName.replace(/\//g,""); //Remove /s
+	petName = petName.replace(/\\/g,""); //Remove \s
+	petName = petName.replace(/\?/g,""); //Remove ?s
+	petName = petName.replace(/\`/g,""); //Remove `s
+	petName = petName.replace(/\~/g,""); //Remove ~s
+	petName = petName.replace(/\!/g,""); //Remove !s
+	petName = petName.replace(/\#/g,""); //Remove #s
+	petName = petName.replace(/\$/g,""); //Remove $s
+	petName = petName.replace(/\%/g,""); //Remove %s
+	petName = petName.replace(/\^/g,""); //Remove ^s
+	petName = petName.replace(/\*/g,""); //Remove *s
+	petName = petName.replace(/\(/g,""); //Remove (s
+	petName = petName.replace(/\)/g,""); //Remove )s
+	petName = petName.replace(/\+/g,""); //Remove +s
+	petName = petName.replace(/\;/g,""); //Remove ;s
+	petName = petName.replace(/\:/g,""); //Remove :s
+	petName = petName.replace(/\"/g,""); //Remove "s
+	petName = petName.replace(/\'/g,""); //Remove 's
+	petName = petName.replace(/\{/g,""); //Remove {s
+	petName = petName.replace(/\}/g,""); //Remove }s
+	petName = petName.replace(/\[/g,""); //Remove [s
+	petName = petName.replace(/\]/g,""); //Remove ]s
 	myPetsTabPet.name = petName;
 	closeNotification();
 };

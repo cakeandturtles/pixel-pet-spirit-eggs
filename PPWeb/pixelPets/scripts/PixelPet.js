@@ -165,6 +165,14 @@ var PixelPet = function(petSpeciesObj){
 				//SET LIMIT FOR EGG HATCH
 				this.nextEventTime = 160; //In seconds
 			}
+			
+			if (this.name == this.prevSpecies){
+				this.name = this.species;
+				this.prevSpecies = this.species;
+			}
+			if (userLoggedIn){
+				dataUpdateCounter = 230;
+			}
 		}
 	};
 	
@@ -253,6 +261,7 @@ var PixelPet = function(petSpeciesObj){
 
 		if (imageId != ""){
 			var petImage = document.getElementById(imageId);
+			if (petImage == null) return;
 			var petSpriteSettings = ""+((-1)*((this.frameWidth*this.currFrame)+(this.frameWidth*this.aniX)))+"px "+((-1)*this.frameHeight*this.aniY)+"px";
 			petImage.style.backgroundPosition=petSpriteSettings;
 		}

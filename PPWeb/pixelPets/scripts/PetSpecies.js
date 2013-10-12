@@ -14,7 +14,8 @@ var GetRandomPet = function(){
 	while (loop){
 		loop = false;
 		for (var i = 0; i < userPets.length; i++){
-			if (userPets[i].speciesObj.index == rand){
+			if (userPets[i] == null) continue;
+			if (userPets[i].petSpeciesObj.index == rand){
 				rand++;
 				if (rand > 8) rand = 0;
 				loop = true;
@@ -41,6 +42,19 @@ var GetRandomPet = function(){
 		return new PixelPet(Glob);
 	else if (rand == 8)
 		return new PixelPet(Dribble);
+};
+
+var getNewPetFromSpeciesString = function(species){
+	if (species == "Pup") return new PixelPet(Pup);
+	if (species == "Hog") return new PixelPet(Hog);
+	if (species == "Pillar") return new PixelPet(Pillar);
+	if (species == "Squirm") return new PixelPet(Squirm);
+	if (species == "Peep") return new PixelPet(Peep);
+	if (species == "Sprout") return new PixelPet(Sprout);
+	if (species == "Blubby") return new PixelPet(Blubby);
+	if (species == "Glob") return new PixelPet(Glob);
+	if (species == "Dribble") return new PixelPet(Dribble);
+	return new PixelPet(Pup); //Default...
 };
 
 //Mammal pets 1

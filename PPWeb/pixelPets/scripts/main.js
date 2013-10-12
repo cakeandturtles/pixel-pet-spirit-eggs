@@ -18,6 +18,7 @@ window.onload = function(){
 	mainUpdate();
 };
 
+var dataUpdateCounter = 0;
 var mainUpdate = function(){
 	currTabUpdate();
 	titleNotify();
@@ -36,6 +37,14 @@ var mainUpdate = function(){
 		}else{
 			userPets[i].Update("");
 		}
+	}
+	
+	//Update data for saving through post
+	dataUpdateCounter++;
+	if (dataUpdateCounter >= 240 && userLoggedIn){ //SAVE APPROX EVERY MINUTE
+		dataUpdateCounter = 0;
+		updateFormData();
+		saveUserInfo(accountInfoUsername, accountInfoPassword);
 	}
 };
 
@@ -125,4 +134,5 @@ var closeNotification = function() {
 			myPetsTabPet.UpdateAnimation("myPetsTabPetImageNotify");
 		}
 	 }
+	 dataUpdateCounter = 230;
 }

@@ -49,7 +49,7 @@ var AddSquirmPetsToCodex = function(){
 	CodexPet.BabyGrow();
 	CodexPet.mood = 255;
 	CodexPet.AdolescentGrow();
-	CodexPet.codexDescription = "The horn on the back of Feebcroak plays a haunting melody that is said to lure travelers into kissing them, thinking that a Prince or Princess will appear in their place. This is never the case.";
+	CodexPet.codexDescription = "The horn on the back of Feebcroak plays a haunting melody that is said to lure travelers into kissing them, thinking that a Prince or Princess will appear in their place.";
 	userCodex.push(CodexPet);
 	
 	//ADD DRANAMUS TO CODEX

@@ -27,12 +27,21 @@
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/styleControl.js"></script>
 		<!--Various functions for initiating each tab, calls the above Tab scripts-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navControl.js"></script>
+		<!--Data Management-->
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/dataManager.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/formDataManager.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/accountManager.js"></script>
 		<!--Initialize global variables and start application-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/main.js"></script>
 	</head>
 	<body>
 		<br/>
-		<div style="width:440px; margin: 0px auto;margin-bottom:5px;font-weight:bold;">Pixel Pets: Pet and Talk to Virtual Pets!!</div>
+		<div style="width:540px; height:24px; margin: 0px auto;margin-bottom:5px; position:relative;left:50px;">
+			<div id="pixelPetsTitle" style="float:left;width:420px;font-weight:bold;">Pixel Pets: Pet and Talk to Virtual Pets!!</div>
+			<div id="accountArea" style="float:right;width:120px;font-size:10px;text-align:right;">	
+				<div id="loginButton" style="margin-top:-5px;" class="navButton" onclick="accountInfoNotify();">SIGN UP/LOG IN</div>
+			</div>
+		</div>
 		<div id="organizer">
 			<div id="navigation">
 				<br/>
@@ -61,6 +70,61 @@
 					<a href="javascript:close()">Close</a>
 				</div>
 			</div>
+		</div>
+		<div style="visibility:collapse;">
+			<input type="text" id="form_name" name="name" /> <input type="text" id="form_pass" name="pass" />
+			<!--Pet 1 Form stuff-->
+			<input type="checkbox" id="form_pet1exists" name="pet1exists" /> 
+			<input type="checkbox" id="form_pet1canRelease" name="pet1canRelease" />
+			<input type="text" id="form_pet1petSpecies" name="pet1petSpecies" /> 
+			<input type="number" id="form_pet1speciesIndex" name="pet1speciesIndex" />
+			<input type="text" id="form_pet1petForm" name="pet1petForm" /> 
+			<input type="checkbox" id="form_pet1wasHappyTeen" name="pet1wasHappyTeen" /> 
+			<input type="number" id="form_pet1mood" name="pet1mood" /> 
+			<input type="number" id="form_pet1nextEventTime" name="pet1nextEventTime" /> 
+			<input type="number" id="form_pet1expTimer" name="pet1expTimer" />
+			<input type="number" id="form_pet1aniY" name="pet1aniY" /> 
+			<input type="text" id="form_pet1name" name="pet1name" />
+			<input type="checkbox" id="form_pet1formChange" name="pet1formChange" /> 
+			<!--Pet 2 Form stuff-->
+			<input type="checkbox" id="form_pet2exists" name="pet2exists" /> 
+			<input type="checkbox" id="form_pet2canRelease" name="pet2canRelease" />
+			<input type="text" id="form_pet2petSpecies" name="pet2petSpecies" /> 
+			<input type="number" id="form_pet2speciesIndex" name="pet2speciesIndex" />
+			<input type="text" id="form_pet2petForm" name="pet2petForm" /> 
+			<input type="checkbox" id="form_pet2wasHappyTeen" name="pet2wasHappyTeen" /> 
+			<input type="number" id="form_pet2mood" name="pet2mood" /> 
+			<input type="number" id="form_pet2nextEventTime" name="pet2nextEventTime" /> 
+			<input type="number" id="form_pet2expTimer" name="pet2expTimer" />
+			<input type="number" id="form_pet2aniY" name="pet2aniY" /> 
+			<input type="text" id="form_pet2name" name="pet2name" />
+			<input type="checkbox" id="form_pet2formChange" name="pet2formChange" /> 
+			<!--Pet 3 Form stuff-->
+			<input type="checkbox" id="form_pet3exists" name="pet3exists" /> 
+			<input type="checkbox" id="form_pet3canRelease" name="pet3canRelease" />
+			<input type="text" id="form_pet3petSpecies" name="pet3petSpecies" /> 
+			<input type="text" id="form_pet3speciesIndex" name="pet3speciesIndex" />
+			<input type="text" id="form_pet3petForm" name="pet3petForm" /> 
+			<input type="checkbox" id="form_pet3wasHappyTeen" name="pet3wasHappyTeen" /> 
+			<input type="number" id="form_pet3mood" name="pet3mood" /> 
+			<input type="number" id="form_pet3nextEventTime" name="pet3nextEventTime" /> 
+			<input type="number" id="form_pet3expTimer" name="pet3expTimer" />
+			<input type="number" id="form_pet3aniY" name="pet3aniY" /> 
+			<input type="text" id="form_pet3name" name="pet3name" />
+			<input type="checkbox" id="form_pet3formChange" name="pet3formChange" /> 
+			<!--Pet 4 Form stuff-->
+			<input type="checkbox" id="form_pet4exists" name="pet4exists" /> 
+			<input type="checkbox" id="form_pet4canRelease" name="pet4canRelease" />
+			<input type="text" id="form_pet4petSpecies" name="pet4petSpecies" /> 
+			<input type="number" id="form_pet4speciesIndex" name="pet4speciesIndex" />
+			<input type="text" id="form_pet4petForm" name="pet4petForm" /> 
+			<input type="checkbox" id="form_pet4wasHappyTeen" name="pet4wasHappyTeen" /> 
+			<input type="number" id="form_pet4mood" name="pet4mood" /> 
+			<input type="number" id="form_pet4nextEventTime" name="pet4nextEventTime" /> 
+			<input type="number" id="form_pet4expTimer" name="pet4expTimer" />
+			<input type="number" id="form_pet4aniY" name="pet4aniY" /> 
+			<input type="text" id="form_pet4name" name="pet4name" />
+			<input type="checkbox" id="form_pet4formChange" name="pet4formChange" /> 
 		</div>
 		
 		<div id="backToCakeandturtles">

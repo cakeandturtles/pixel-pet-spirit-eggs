@@ -7,7 +7,7 @@ var AddBlubbyPetsToCodex = function(){
 	//ADD BLUBBY TO CODEX
 	var CodexPet = new PixelPet(Blubby);
 	CodexPet.EggHatched();
-	CodexPet.codexDescription = "Blubby are fond of hopping around, and can withstand very cold temperatures do to essentially being an animated blob of fat.";
+	CodexPet.codexDescription = "Blubby are fond of hopping around, and can withstand very cold temperatures due to essentially being an animated blob of fat.";
 	userCodex.push(CodexPet);
 	
 	//ADD SPORCLE TO CODEX
