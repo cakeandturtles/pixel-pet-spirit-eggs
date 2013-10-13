@@ -1,12 +1,9 @@
 http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
 
 
-1. Should grey out (text and border) any page that has no stored pet codex info currently.
-2. Notification on MY PETS tab button when something happens... (!!! > ...)
-3. Really need to do palette colorization and not have 6 giant images..
+1. Notification on MY PETS tab button when something happens... (!!! > ...)
+2. Really need to do palette colorization and not have 6 giant images..
 	-Otherwise fix bloomer images on other 5 images
-4. ENTER to close notifications (with only OKAY)???
-5. That sweet horiz-scroll bar pops up on my pets but disappears on codex...
-6. Pause pet (or all pets) when naming pet first time?
+4. That sweet horiz-scroll bar pops up on my pets but disappears on codex...
+5. Pause pet (or all pets) when naming pet first time?
 	-Make a pause
-7. How to not slow down when not active Tab???

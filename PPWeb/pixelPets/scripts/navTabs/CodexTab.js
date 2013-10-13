@@ -43,6 +43,7 @@ var codexTabScriptBegin = function(){
 	}
 	tabThemeControl = codexTabThemeControl;
 	
+	currTabUpdate = codexTabSetUpBody;
 	codexTabSetUpBody();
 };
 
@@ -80,7 +81,29 @@ var codexTabSetUpBody = function(){
 			codexCurrPagePets[i].ResetAnimation();
 			codexCurrPagePets[i].UpdateAnimation(tempCodexImageName);
 		}
+		
+		var codexPageButton = "Page"+(i+1)+"Button";
+		var noPetsOnPage = true;
+		var startIndex = i * 9;
+		var endIndex = startIndex + 9;
+		for (var j = startIndex; j < endIndex; j++){
+			if (userCodex[j].inCodex){
+				noPetsOnPage = false;
+				break;
+			}
+		}
+		if (noPetsOnPage){
+			document.getElementById(codexPageButton).className = "navButtonCodexInactive";
+			document.getElementById(codexPageButton).onclick = blankFunction;
+		}
+		else{ 
+			document.getElementById(codexPageButton).className = "navButtonCodex";
+			document.getElementById(codexPageButton).onclick = eval("codexTabgotoPage"+(i+1)+";");
+		}
 	}
+};
+
+var blankFunction = function(){
 };
 
 var codexTabThemeControl = function(){

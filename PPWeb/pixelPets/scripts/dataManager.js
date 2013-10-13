@@ -193,7 +193,7 @@ var loadUserInfo = function(username, password){
 	xmlhttp.send("name="+username+"&pass="+password);
 };
 
-var loadDataIntoApp = function(dataResponse){
+var loadDataIntoApp = function(dataResponse){	
 	var data = dataResponse.split(",");
 	var index = 0;
 	//LOAD THEME
@@ -291,4 +291,8 @@ var loadDataIntoApp = function(dataResponse){
 		userCodex[i].inCodex = (new Boolean(parseInt(data[index]))) == true;
 		index++;
 	}
+	
+	gotoMyPets();
+	codexTabSelectedTab = null;
+	codexTabLastSelectedTab = null;
 };

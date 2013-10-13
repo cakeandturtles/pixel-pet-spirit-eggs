@@ -9,6 +9,13 @@ var resetNavButtons = function(){
 	for (var i = 0; i < navButtons.length; i++){
 		navButtons[i].style.background = lightColor;
 		navButtons[i].style.color = fontColor;
+		navButtons[i].style.borderColor = "#000000";
+	}
+	navButtons = getElementsByClass("navButtonCodexInactive");
+	for (var i = 0; i < navButtons.length; i++){
+		navButtons[i].style.background = lightColor;
+		navButtons[i].style.color = darkColor;
+		navButtons[i].style.borderColor = darkColor;
 	}
 };
 

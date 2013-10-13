@@ -9,13 +9,29 @@ var img = new Image().src = 'pixelPets/images/eggs_and_pets_big.png';
 var img2 = new Image().src = 'pixelPets/images/eggs_and_pets_happy_big.png';
 var img3 = new Image().src = 'pixelPets/images/eggs_and_pets_mad_big.png';
 
+var w;
+var startWorker = function(){
+	if (typeof(Worker)!=="undefined"){
+		if (typeof(w)=="undefined"){
+			w = new Worker("pixelPets/scripts/main_worker.js");
+		}
+		w.onmessage = function(event){
+			mainUpdate();
+		};
+	}else{
+		//THE BROWSER DOES NOT SUPPORT WEB WORKERS...
+		//BROWSERS THAT DO NOT SUPPORT WEB WORKERS WILL EXPERIENCE SLOWED application time 
+		//When application is in an inactive tab
+		setInterval(function(){mainUpdate()},60);
+	}
+};
+
 window.onload = function(){
 	userPets.push(GetRandomPet());
 	InitializeCodex();
 	purpleTheme();
 	gotoMyPets();
-	setInterval(function(){mainUpdate()},60);
-	mainUpdate();
+	startWorker();
 };
 
 var dataUpdateCounter = 0;
