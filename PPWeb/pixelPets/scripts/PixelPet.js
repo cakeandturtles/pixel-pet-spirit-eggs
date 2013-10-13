@@ -166,10 +166,6 @@ var PixelPet = function(petSpeciesObj){
 				this.nextEventTime = 160; //In seconds
 			}
 			
-			if (this.name == this.prevSpecies){
-				this.name = this.species;
-				this.prevSpecies = this.species;
-			}
 			if (userLoggedIn){
 				dataUpdateCounter = 230;
 			}

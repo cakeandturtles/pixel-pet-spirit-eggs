@@ -96,8 +96,8 @@ body{
 	cursor: pointer;
 	width:128px; 
 	height:128px;
-	background:rgb(255, 255, 255);
-	background:rgba(255, 255, 255, 0.7); 
+	background: #ffffff;
+	opacity: 0.8; filter: alpha(opacity=80);
 	border-style:solid; 
 	border-width:1px; 
 	border-color:#000000; 
@@ -119,34 +119,15 @@ body{
 .genericPetImage{
 	width: 128px;
 	height: 128px;
-	background-image: url('images/eggs_and_pets_big.png');
-}
-.genericPetImageHappy{
-	width: 128px;
-	height: 128px;
-	background-image: url("images/eggs_and_pets_happy_big.png");
-}
-.genericPetImageSad{
-	width: 128px;
-	height: 128px;
-	background-image: url("images/eggs_and_pets_sad_big.png");
-}
-.genericPetImageTicked{
-	width: 128px;
-	height: 128px;
-	background-image: url("images/eggs_and_pets_ticked_big.png");
-}
-.genericPetImageAngry{
-	width: 128px;
-	height: 128px;
-	background-image: url("images/eggs_and_pets_mad_big.png");
+	background: #000000;
+	background-image: url('images/eggs_and_pets_big_reverse.png');
 }
 .codexImageContainer{
 	cursor: pointer;
 	width:128px; 
 	height:128px;
-	background:rgb(255, 255, 255);
-	background:rgba(255, 255, 255, 0.7); 
+	background: #ffffff;
+	opacity: 0.8; filter: alpha(opacity=80);
 	border-style:solid; 
 	border-width:1px; 
 	border-color:#000000; 

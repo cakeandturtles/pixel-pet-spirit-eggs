@@ -287,9 +287,18 @@ var loadDataIntoApp = function(dataResponse){
 	}
 	
 	//NOW GO THROUGH AND LOAD CODEX
+	hasAllCodex = false;
+	previouslyNotified = false;
+	var tempHasAllCodex = true;
 	for (var i = 0; i < userCodex.length; i++){
 		userCodex[i].inCodex = (new Boolean(parseInt(data[index]))) == true;
+		if (!userCodex[i].inCodex)
+			tempHasAllCodex = false;
 		index++;
+	}
+	if (tempHasAllCodex){
+		hasAllCodex = true;
+		previouslyNotified = true;
 	}
 	
 	gotoMyPets();

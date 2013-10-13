@@ -149,6 +149,26 @@ var closeNotification = function() {
 			myPetsTabPet.UpdateAnimation("myPetsTabPetImage");
 			myPetsTabPet.UpdateAnimation("myPetsTabPetImageNotify");
 		}
+	 }else{
+		if (hasAllCodex && !previouslyNotified){
+			previouslyNotified = true;
+			notifyOfAllCodex();
+		}
 	 }
 	 dataUpdateCounter = 230;
 }
+
+var notifyOfAllCodex = function(){
+	nameNotification = true;
+	
+	var note = document.getElementById("notificationBody");
+	var noteHTML = "<div class='genericPetImageContainer' style='cursor:default;margin-top:5px;'>";
+	noteHTML += "<div id=\"myPetsTabPetImageNotify\" class='genericPetImage'></div>";
+	noteHTML += "</div><br/>";
+	noteHTML += "Congratulations!!!<br/><br/>You have catalogued every single pet into your codex that Pixel Pets has to offer!<br/><br/>I hope you enjoyed the game :)!";
+	noteHTML += "<div style='clear:both;'></div>";
+	noteHTML += "<br/><div class='actionButton' style='float:none;width:80px;margin:0px auto; margin-top:10px;' onclick='closeNotification();'>Okay</div>";
+	note.innerHTML = noteHTML;
+
+	openNotification();
+};

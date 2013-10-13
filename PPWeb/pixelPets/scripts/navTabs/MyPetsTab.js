@@ -6,13 +6,13 @@ myPetsTabHTML += "<div id='Pet4Button' class=\"navButton\" style=\"float:left;pa
 myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
 myPetsTabHTML += "<div id='myPetsTabNameSpecies' style=\"float:left;cursor:pointer;\" onclick='myPetsTabNameNotify(false);'>??? the Mysterious Egg</div>				<div id='myPetsTabLevel' style=\"float:right;\">Lvl. ???</div>";
 myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
-myPetsTabHTML += "<div style='position:relative; left:36%;'>";
+myPetsTabHTML += "<div style='position:relative; left:36%; width:350px; height:128px;'>";
 myPetsTabHTML += "<div class='genericPetImageContainer' style='float:left;' onclick='myPetsTabPetPet()'>";
 myPetsTabHTML += "<div id=\"myPetsTabPetImage\" class='genericPetImage'></div>";
 myPetsTabHTML += "</div>";
 myPetsTabHTML += "<div style='float:left;margin-top:10px;'>";
-myPetsTabHTML += "<div id=\"myPetsTabReleasePet\" class='actionButton' onclick='myPetsTabReleasePet();'>Release Pet</div>";
-myPetsTabHTML += "</div></div><div class=\"clearer\"></div>";
+myPetsTabHTML += "<div id=\"myPetsTabReleasePet\" class='actionButton' onclick='myPetsTabReleasePet();'>Release Pet</div></div>";
+myPetsTabHTML += "</div><div class=\"clearer\"></div>";
 myPetsTabHTML += "<div style='width:180px;margin:8px auto;position:relative;left:-10px;'>";
 myPetsTabHTML += "<div style='float:left;'>Exp:&nbsp;</div>";
 myPetsTabHTML += "<div style='float:left; width:128px;height:16px;background:#000000;'>"
@@ -22,8 +22,8 @@ myPetsTabHTML += "<div class=\"clearer\"></div>";
 myPetsTabHTML += "<div id='moodContainer' style='width:200px;margin:8px auto;position:relative;left:-14px;'>";
 myPetsTabHTML += "<div style='float:left;'>Mood:&nbsp;</div>";
 myPetsTabHTML += "<div style='float:left; width:128px; height:16px;background:#000000;'>";
-myPetsTabHTML += "<div id='myPetsTabPetMood' style='width:100px;height:14px;background:#ff00ff;margin:1px;'></div>";
-myPetsTabHTML += "</div><div class=\"clearer\"></div></div><br/>";
+myPetsTabHTML += "<div id='myPetsTabPetMood' style='width:100px;height:14px;background:#ff00ff;margin:1px;'></div></div>";
+myPetsTabHTML += "<div class=\"clearer\"></div></div><br/>";
 myPetsTabHTML += "<div id=\"myPetsTabPetDescription\" style=\"height:32px;\">It moves around a lot.<br/>It must be close to hatching!</div><br/></div>";
 myPetsTabHTML += "<div id='talkToPetContainer' style='width:350px; position:absolute; bottom:10px; left:30%; right:30%;'>";
 myPetsTabHTML += "<input id='myPetsTabTalkBox' style='width:200px;float:left;margin-top:10px;' type='text' onKeyPress='myPetsTabTalkEnter(event);' />";
@@ -64,16 +64,16 @@ var myPetsTabUpdatePet = function(){
 	myPetsTabPet = myPetsTabGetSelectedPet();
 	if (myPetsTabPet.emotion == 0){
 		if (myPetsTabPet.mood < 128 && myPetsTabPet.petForm != "EGG"){
-			document.getElementById("myPetsTabPetImage").className = "genericPetImageSad";
+			document.getElementById("myPetsTabPetImage").style.backgroundColor = "#00007F";
 		}else{
 			if (myPetsTabPet.PetPetCounter >= 4)
-				document.getElementById("myPetsTabPetImage").className = "genericPetImageTicked";
-			else document.getElementById("myPetsTabPetImage").className = "genericPetImage";
+				document.getElementById("myPetsTabPetImage").style.backgroundColor = "#8F0000";
+			else document.getElementById("myPetsTabPetImage").style.backgroundColor = "#000000";
 		}
 	}else if (myPetsTabPet.emotion > 0){
-		document.getElementById("myPetsTabPetImage").className = "genericPetImageHappy";
+		document.getElementById("myPetsTabPetImage").style.backgroundColor = "#FF00FF";
 	}else{
-		document.getElementById("myPetsTabPetImage").className = "genericPetImageAngry";
+		document.getElementById("myPetsTabPetImage").style.backgroundColor = "#FF0000";
 	}
 	
 	if (myPetsTabPet.formChange){
@@ -159,6 +159,10 @@ var myPetsTabNameNotify = function(justHatched){
 			noteHTML += "....<br/>";
 			noteHTML += ".....<br/>";
 			noteHTML += "<div style='margin-top:5px;'>" + myPetsTabPet.name + " evolved into " + myPetsTabPet.species + "!</div>";
+			if (this.name == this.prevSpecies){
+				this.name = this.species;
+				this.prevSpecies = this.species;
+			}
 			if (myPetsTabPet.petForm == "ADU"){
 				noteHTML += "<br/>Interestingly enough...<div style='margin-top:5px;'>" + myPetsTabPet.name + " laid an egg!</div>";
 				if (userPets.length < 4)
@@ -185,12 +189,12 @@ var myPetsTabTalkEnter = function(e){
 var myPetsTabTalk = function(){
 	var talkText = document.getElementById("myPetsTabTalkBox").value;
 	if (talkText && talkText.trim()){
-		myPetsTabPet.currentDescription = GetRandomResponse();
-		myPetsTabPet.talkResponse = 50;
+		myPetsTabPet.currentDescription = "<b>You said:</b> " + talkText.trim() + "<br/><br/>" + GetRandomResponse();
+		myPetsTabPet.talkResponse = 100;
 		var rand = Math.floor(Math.random()*3);
 		if (rand == 0)
-			myPetsTabPet.emotion = -20;
-		else myPetsTabPet.emotion = 20;
+			myPetsTabPet.emotion = -40;
+		else myPetsTabPet.emotion = 40;
 	}
 	document.getElementById("myPetsTabTalkBox").value = "";
 };
