@@ -32,6 +32,7 @@ window.onload = function(){
 	purpleTheme();
 	gotoMyPets();
 	startWorker();
+	loadLocalData();
 };
 
 var dataUpdateCounter = 0;
@@ -57,10 +58,14 @@ var mainUpdate = function(){
 	
 	//Update data for saving through post
 	dataUpdateCounter++;
-	if (dataUpdateCounter >= 240 && userLoggedIn){ //SAVE APPROX EVERY MINUTE
+	if (dataUpdateCounter >= 240){ //SAVE APPROX EVERY MINUTE
 		dataUpdateCounter = 0;
 		updateFormData();
-		saveUserInfo(accountInfoUsername, accountInfoPassword);
+		if (userLoggedIn){
+			saveUserInfo(accountInfoUsername, accountInfoPassword);
+		}else{
+			saveLocalData();
+		}
 	}
 };
 

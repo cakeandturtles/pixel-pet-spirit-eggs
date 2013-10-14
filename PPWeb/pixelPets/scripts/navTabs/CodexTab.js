@@ -116,55 +116,84 @@ var codexTabInfoNotify = function(codexPet){
 	
 	var note = document.getElementById("notificationBody");
 	var noteHTML = "<div class='genericPetImageContainer' style='cursor:default;margin-top:5px;'>";
-	noteHTML += "<div id=\"codexTabPetInfoNotify\" class='genericPetImage'></div>";
+	if (codexPet != null)
+		noteHTML += "<div id=\"codexTabPetInfoNotify\" class='genericPetImage'></div>";
+	else noteHTML += "<div id=\"codexTabPetInfoNotify\" class='unknownPetImage'></div>";
 	noteHTML += "</div><br/>";
 	noteHTML += "<div style='text-align:left;'>";
 	noteHTML += "<b>Species:</b> "
-	if (codexPet.petForm == "EGG")
+	if (codexPet == null)
+		noteHTML += "Mystery";
+	else if (codexPet.petForm == "EGG")
 		noteHTML += codexPet.eggSpecies;
 	else noteHTML += codexPet.species;
+	noteHTML += "<br/><b style='margin-left:1px;'> &nbsp;&nbsp;&nbsp;&nbsp;Level: </b>";
+	if (codexPet == null)
+		noteHTML += "???";
+	else noteHTML += codexPet.petForm;
 	noteHTML += "<br/><div style='clear:both;'></div>";
 	noteHTML += "<div style='float:left;width:72px;'><b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Info:</b></div>";
-	noteHTML += "<div style='float:left;width:236px;margin-left:7px;'>" + codexPet.codexDescription + "</div>";
+	if (codexPet != null){
+		noteHTML += "<div style='float:left;width:236px;margin-left:7px;'>" + codexPet.codexDescription + "</div>";
+	}else{
+		noteHTML += "<div style='float:left;width:236px;margin-left:7px;'>" + "It is a mystery." + "</div>";
+	}
 	noteHTML += "</div>";
 	noteHTML += "<div style='clear:both;'></div>";
 	noteHTML += "<br/><div class='actionButton' style='float:none;width:80px;margin:0px auto; margin-top:10px;' onclick='closeNotification();'>Okay</div>";
 	note.innerHTML = noteHTML;
 		
 	openNotification();
-	codexPet.UpdateAnimation("codexTabPetInfoNotify");
+	if (codexPet != null)
+		codexPet.UpdateAnimation("codexTabPetInfoNotify");
 };
 
 var codexTabShowPet0 = function(){
-	codexTabInfoNotify(codexCurrPagePets[0]);
+	if (codexCurrPagePets[0].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[0]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet1 = function(){
-	codexTabInfoNotify(codexCurrPagePets[1]);
+	if (codexCurrPagePets[1].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[1]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet2 = function(){
-	codexTabInfoNotify(codexCurrPagePets[2]);
+	if (codexCurrPagePets[2].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[2]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet3 = function(){
-	codexTabInfoNotify(codexCurrPagePets[3]);
+	if (codexCurrPagePets[3].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[3]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet4 = function(){
-	codexTabInfoNotify(codexCurrPagePets[4]);
+	if (codexCurrPagePets[4].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[4]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet5 = function(){
-	codexTabInfoNotify(codexCurrPagePets[5]);
+	if (codexCurrPagePets[5].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[5]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet6 = function(){
-	codexTabInfoNotify(codexCurrPagePets[6]);
+	if (codexCurrPagePets[6].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[6]);
+	else codexTabInfoNotify(null);
 };
 
 var codexTabShowPet7 = function(){
-	codexTabInfoNotify(codexCurrPagePets[7]);
+	if (codexCurrPagePets[7].inCodex)
+		codexTabInfoNotify(codexCurrPagePets[7]);
+	else codexTabInfoNotify(null);
 };
 
 //PAGE CONTROL/////////////////////////////////////////////////////////////////

@@ -157,7 +157,7 @@ var PixelPet = function(petSpeciesObj){
 				this.formChange = true;
 				
 				//SET LIMIT FOR EVOLUTION!!!
-				this.nextEventTime = this.lastEventTime + 560; //In seconds
+				this.nextEventTime = this.lastEventTime + 960; //In seconds
 			}else{ //PetFormEnum.ADULT
 				this.RevertToEgg();
 				this.formChange = true;
@@ -196,7 +196,7 @@ var PixelPet = function(petSpeciesObj){
 			}else{		
 				this.frameCountLimit = 120;
 				if (this.talkResponse == 0)
-					this.currentDescription = "The egg is warm but doesn't move much.";
+					this.currentDescription = "The egg is warm but doesn't move much.<br/>Try rubbing it?";
 			}
 		}else{
 			this.frameCountLimit = 12;
@@ -209,9 +209,9 @@ var PixelPet = function(petSpeciesObj){
 				else{
 					if (this.mood < 128){
 						if (this.mood < 64){
-							this.currentDescription = this.name + " is crying :,(!!";
+							this.currentDescription = this.name + " is crying :,(!!<br/><br/>Pet "+this.name + "!!";
 						}else{
-							this.currentDescription = this.name + " is feeling lonely :(";
+							this.currentDescription = this.name + " is feeling lonely :(<br/><br/>Pet "+this.name + "?";
 						}
 					}else if (this.PetPetCounter >= 4){
 						this.currentDescription = this.name + " is irritated... >:(<br/>Leave him be for a second?";
@@ -235,7 +235,8 @@ var PixelPet = function(petSpeciesObj){
 	this.UpdateAnimation = function(imageId){
 		if (++this.frameCount >= this.frameCountLimit){
 			this.frameCount = 0;
-			this.mood--; 
+			if (this.currFrame % 2 == 0)
+				this.mood--; 
 			if (this.mood < 0) this.mood = 0;
 			
 			if (++this.currFrame >= this.maxFrame){

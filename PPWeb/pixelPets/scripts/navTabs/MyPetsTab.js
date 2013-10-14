@@ -1,8 +1,8 @@
 var myPetsTabHTML = "";
-myPetsTabHTML += "<div id='Pet1Button' class=\"navButton\" style=\"background:#ffffff; float:left;padding-left:30px;padding-right:20px;width:45px;text-align:left;\" onclick='myPetsTabgotoPet1()'>PET 1</div>";
-myPetsTabHTML += "<div id='Pet2Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;text-align:left;\" onclick='myPetsTabgotoPet2()'>PET 2</div>";
-myPetsTabHTML += "<div id='Pet3Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;text-align:left;\" onclick='myPetsTabgotoPet3()'>PET 3</div>";
-myPetsTabHTML += "<div id='Pet4Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;text-align:left;\" onclick='myPetsTabgotoPet4()'>PET 4</div>";
+myPetsTabHTML += "<div id='Pet1Button' class=\"navButton\" style=\"background:#ffffff; float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet1()'>PET 1</div>";
+myPetsTabHTML += "<div id='Pet2Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet2()'>PET 2</div>";
+myPetsTabHTML += "<div id='Pet3Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet3()'>PET 3</div>";
+myPetsTabHTML += "<div id='Pet4Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet4()'>PET 4</div>";
 myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
 myPetsTabHTML += "<div id='myPetsTabNameSpecies' style=\"float:left;cursor:pointer;\" onclick='myPetsTabNameNotify(false);'>??? the Mysterious Egg</div>				<div id='myPetsTabLevel' style=\"float:right;\">Lvl. ???</div>";
 myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
@@ -331,13 +331,25 @@ var myPetsTabGetSelectedPet = function(){
 var myPetsTabGetPetIndex = function(){
 	switch (myPetsTabSelectedTab){
 		case "Pet1":
+			if (userPets.length < 1){
+				userPets.push(GetRandomPet());
+			}
 			return 0;
 		case "Pet2":
-			return 1;
+			if (userPets.length < 2){
+				myPetsTabgotoPet1();
+				return myPetsTabGetPetIndex();
+			}else return 1;
 		case "Pet3":
-			return 2;
+			if (userPets.length < 3){
+				myPetsTabgotoPet2();
+				return myPetsTabGetPetIndex();
+			}else return 2;
 		case "Pet4":
-			return 3;
+			if (userPets.length < 4){
+				myPetsTabgotoPet3();
+				return myPetsTabGetPetIndex();
+			}else return 3;
 		default: return 0;
 	}
 };

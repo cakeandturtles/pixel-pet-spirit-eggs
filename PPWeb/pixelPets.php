@@ -3,6 +3,8 @@
 	<head>
 		<title>Pixel Pets!</title>
 		<link href="pixelPets/pixelPetStyle.css" rel="stylesheet" type="text/css">
+		<!--JSON2-->
+		<script language="javascript" type="text/javascript" src="pixelPets/json2.js"></script>
 		<!--Declaration of PixelPet class and species-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PixelPet.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/PetSpecies.js"></script>
@@ -29,6 +31,7 @@
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/navControl.js"></script>
 		<!--Data Management-->
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/dataManager.js"></script>
+		<script language="javascript" type="text/javascript" src="pixelPets/scripts/localDataManager.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/formDataManager.js"></script>
 		<script language="javascript" type="text/javascript" src="pixelPets/scripts/accountManager.js"></script>
 		<!--Initialize global variables and start application-->
@@ -36,10 +39,12 @@
 	</head>
 	<body>
 		<br/>
-		<div style="width:540px; height:24px; margin: 0px auto;margin-bottom:5px; position:relative;left:50px;">
+		<div id="pixelpetsHeader" style="width:540px; height:24px; margin: 0px auto;margin-bottom:5px; position:relative;left:50px;">
 			<div id="pixelPetsTitle" style="float:left;width:420px;font-weight:bold;">Pixel Pets: Pet and Talk to Virtual Pets!!</div>
-			<div id="accountArea" style="float:right;width:120px;font-size:10px;text-align:right;">	
+			<div id="accountArea" style="float:left;width:120px;font-size:10px;text-align:right;">	
 				<div id="loginButton" style="margin-top:-5px;" class="navButton" onclick="accountInfoNotify();">SIGN UP/LOG IN</div>
+			</div>
+			<div id="logoutArea" style="float:left;width:0px;font-size:10px;text-align:right;">
 			</div>
 		</div>
 		<div id="organizer">
@@ -56,7 +61,9 @@
 			<div class="clearer"></div>
 			<div id="footer">
 				Programmed by Jake Trower<br/>
-				Images/Digimon made by Bandai
+				Images/Digimon made by Bandai<br/><br/>
+				<div id="accountInfoJavascriptWarning" style="position:relative;left:30px;"><b>***Javascript must be enabled to play!!!***</b></div>
+				<div id="accountInfoLoginWarning" style="position:relative;left:30px;"><b>***Game saves to cookies unless logged in!!!***</b></div>
 			</div>
 		</div>
 		
