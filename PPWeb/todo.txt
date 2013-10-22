@@ -1,5 +1,0 @@
-http://tarnished-sanity.tumblr.com/post/59659657739/pokemon-fusion-art-mega-compilation-enjoy
-
-0. Add cookie saving	(Save pets and codex locally if not logged in, or save log in information if logged in)
-	-Add log out ability
-1. Notification on MY PETS tab button when something happens... (!!! > ...)
