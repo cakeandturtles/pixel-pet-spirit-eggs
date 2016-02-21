@@ -6,7 +6,7 @@ var gotoMyPets = function(){
 	stopTabSpecificScripts();
 	selectedNav = NavButtonEnum.MY_PETS;
 	
-	document.getElementById("mainBody").innerHTML = myPetsTabHTML;
+	myPetsTabPopulateBody(document.getElementById("mainBody"));
 	myPetsTabScriptBegin();
 	setTheme();
 };
@@ -15,7 +15,7 @@ var gotoCodex = function(){
 	stopTabSpecificScripts();
 	selectedNav = NavButtonEnum.CODEX;
 	
-	document.getElementById("mainBody").innerHTML = codexTabHTML;
+	codexTabPopulateBody(document.getElementById("mainBody"));
 	codexTabScriptBegin();
 	setTheme();
 };

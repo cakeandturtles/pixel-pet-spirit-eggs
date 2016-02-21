@@ -1,36 +1,38 @@
-var codexTabHTML = "";
-codexTabHTML += "<div id='Page1Button' class=\"navButtonCodex\" onclick='codexTabgotoPage1()'>PAGE 1</div>";
-codexTabHTML += "<div id='Page2Button' class=\"navButtonCodex\" onclick='codexTabgotoPage2()'>PAGE 2</div>";
-codexTabHTML += "<div id='Page3Button' class=\"navButtonCodex\" onclick='codexTabgotoPage3()'>PAGE 3</div>";
-codexTabHTML += "<div id='Page4Button' class=\"navButtonCodex\" onclick='codexTabgotoPage4()'>PAGE 4</div>";
-codexTabHTML += "<div id='Page5Button' class=\"navButtonCodex\" onclick='codexTabgotoPage5()'>PAGE 5</div>";
-codexTabHTML += "<div id='Page6Button' class=\"navButtonCodex\" onclick='codexTabgotoPage6()'>PAGE 6</div>";
-codexTabHTML += "<div id='Page7Button' class=\"navButtonCodex\" onclick='codexTabgotoPage7()'>PAGE 7</div>";
-codexTabHTML += "<div id='Page8Button' class=\"navButtonCodex\" onclick='codexTabgotoPage8()'>PAGE 8</div>";
-codexTabHTML += "<div id='Page9Button' class=\"navButtonCodex\" onclick='codexTabgotoPage9()'>PAGE 9</div>";
-codexTabHTML += "<div class=\"clearer\"></div>";
-
-codexTabHTML += "<div style='width:540px;position:relative;left:5%;margin-top:-5px;'>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet0()'>"; //IMAGE 0
-codexTabHTML += "<div id=\"codexImage0\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet1()'>"; //IMAGE 1
-codexTabHTML += "<div id=\"codexImage1\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet2()'>"; //IMAGE 2
-codexTabHTML += "<div id=\"codexImage2\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet3()'>"; //IMAGE 3
-codexTabHTML += "<div id=\"codexImage3\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet4()'>"; //IMAGE 4
-codexTabHTML += "<div id=\"codexImage4\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet5()'>"; //IMAGE 5
-codexTabHTML += "<div id=\"codexImage5\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet6()'>"; //IMAGE 6
-codexTabHTML += "<div id=\"codexImage6\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet7()'>"; //IMAGE 7
-codexTabHTML += "<div id=\"codexImage7\" class='genericPetImage'></div></div>";
-codexTabHTML += "<div class='codexImageContainer' onclick='codexTabShowPet0()'>"; //IMAGE 8
-codexTabHTML += "<div id=\"codexImage8\" class='genericPetImage'></div></div>";
-
-codexTabHTML += "</div>";
+var codexTabPopulateBody = function(body){
+	body.innerHTML = "";
+	
+	//CREATE CODEX PAGE SELECT BUTTONS
+	for (var i = 0; i < 9; i++){
+		var codexPageButton = document.createElement("div");
+		codexPageButton.id = "Page" + (i+1) + "Button";
+		codexPageButton.class = "navButtonCodex";
+		codexPageButton.innerHTML = "PAGE " + (i+1);
+		codexPageButton.onclick = eval("codexTabgotoPage" + (i+1));
+		body.appendChild(codexPageButton);
+	}
+	var clearer = document.createElement("div"); clearer.className = "clearer";
+	body.appendChild(clearer);
+	
+	//INNER CODEX PICTURE BUTTONS
+	var div = document.createElement("div");
+	div.style.width = "540px";
+	div.style.position = "relative";
+	div.style.left="5%";
+	div.style.marginTop = "-5px";
+	for (var i = 0; i < 8; i++){
+		var imageContainer = document.createElement("div");
+		imageContainer.className="codexImageContainer";
+		imageContainer.onclick = eval("codexTabShowPet" + i);
+		
+		var codexImage = document.createElement("div");
+		codexImage.id="codexImage"+i;
+		codexImage.className = "genericPetImage";
+		
+		imageContainer.appendChild(codexImage);
+		div.appendChild(imageContainer);
+	}
+	body.appendChild(div);
+}
 
 var codexTabSelectedTab;
 var codexTabLastSelectedTab = null;
@@ -70,7 +72,7 @@ var codexTabSetUpBody = function(){
 		codexTabLastSelectedTab = codexTabSelectedTab;
 	}
 	
-	for (var i = 0; i < 9; i++){
+	for (var i = 0; i < 8; i++){
 		var tempCodexImageName = "codexImage" + i;
 		if (i >= codexCurrPagePets.length){
 			document.getElementById(tempCodexImageName).style.visibility = "hidden";

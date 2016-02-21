@@ -1,34 +1,40 @@
-var myPetsTabHTML = "";
-myPetsTabHTML += "<div id='Pet1Button' class=\"navButton\" style=\"background:#ffffff; float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet1()'>PET 1</div>";
-myPetsTabHTML += "<div id='Pet2Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet2()'>PET 2</div>";
-myPetsTabHTML += "<div id='Pet3Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet3()'>PET 3</div>";
-myPetsTabHTML += "<div id='Pet4Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet4()'>PET 4</div>";
-myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
-myPetsTabHTML += "<div id='myPetsTabNameSpecies' style=\"float:left;cursor:pointer;\" onclick='myPetsTabNameNotify(false);'>??? the Mysterious Egg</div>				<div id='myPetsTabLevel' style=\"float:right;\">Lvl. ???</div>";
-myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
-myPetsTabHTML += "<div style='position:relative; left:36%; width:350px; height:128px;'>";
-myPetsTabHTML += "<div class='genericPetImageContainer' style='float:left;' onclick='myPetsTabPetPet()'>";
-myPetsTabHTML += "<div id=\"myPetsTabPetImage\" class='genericPetImage'></div>";
-myPetsTabHTML += "</div>";
-myPetsTabHTML += "<div style='float:left;margin-top:10px;'>";
-myPetsTabHTML += "<div id=\"myPetsTabReleasePet\" class='actionButton' onclick='myPetsTabReleasePet();'>Release Pet</div></div>";
-myPetsTabHTML += "</div><div class=\"clearer\"></div>";
-myPetsTabHTML += "<div style='width:180px;margin:8px auto;position:relative;left:-10px;'>";
-myPetsTabHTML += "<div style='float:left;'>Exp:&nbsp;</div>";
-myPetsTabHTML += "<div style='float:left; width:128px;height:16px;background:#000000;'>"
-myPetsTabHTML += "<div id='myPetsTabPetEXP' style='width:100px;height:14px;background:#00ff00;margin:1px;'></div>";
-myPetsTabHTML += "</div></div>";
-myPetsTabHTML += "<div class=\"clearer\"></div>";
-myPetsTabHTML += "<div id='moodContainer' style='width:200px;margin:8px auto;position:relative;left:-14px;'>";
-myPetsTabHTML += "<div style='float:left;'>Mood:&nbsp;</div>";
-myPetsTabHTML += "<div style='float:left; width:128px; height:16px;background:#000000;'>";
-myPetsTabHTML += "<div id='myPetsTabPetMood' style='width:100px;height:14px;background:#ff00ff;margin:1px;'></div></div>";
-myPetsTabHTML += "<div class=\"clearer\"></div></div><br/>";
-myPetsTabHTML += "<div id=\"myPetsTabPetDescription\" style=\"height:32px;\">It moves around a lot.<br/>It must be close to hatching!</div><br/></div>";
-myPetsTabHTML += "<div id='talkToPetContainer' style='width:350px; position:absolute; bottom:10px; left:30%; right:30%;'>";
-myPetsTabHTML += "<input id='myPetsTabTalkBox' style='width:200px;float:left;margin-top:10px;' type='text' onKeyPress='myPetsTabTalkEnter(event);' />";
-myPetsTabHTML += "<div class='actionButton' style='float:left;' onclick='myPetsTabTalk();'>Say Something</div>";
-myPetsTabHTML += "</div>";
+var myPetsTabPopulateBody = function(body){
+	var myPetsTabHTML = "";
+	myPetsTabHTML += "<div id='Pet1Button' class=\"navButton\" style=\"background:#ffffff; float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet1()'>PET 1</div>";
+	myPetsTabHTML += "<div id='Pet2Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet2()'>PET 2</div>";
+	myPetsTabHTML += "<div id='Pet3Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet3()'>PET 3</div>";
+	myPetsTabHTML += "<div id='Pet4Button' class=\"navButton\" style=\"float:left;padding-left:30px;padding-right:20px;width:45px;max-width:45px;white-space: nowrap;text-align:left;\" onclick='myPetsTabgotoPet4()'>PET 4</div>";
+	myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
+	myPetsTabHTML += "<div id='myPetsTabNameSpecies' style=\"float:left;cursor:pointer;\" onclick='myPetsTabNameNotify(false);'>??? the Mysterious Egg</div>				<div id='myPetsTabLevel' style=\"float:right;\">Lvl. ???</div>";
+	myPetsTabHTML += "<div class=\"clearer\"></div><br/>";
+	myPetsTabHTML += "<div style='position:relative; left:36%; width:350px; height:128px;'>";
+	myPetsTabHTML += "<div class='genericPetImageContainer' style='float:left;' onclick='myPetsTabPetPet()'>";
+	myPetsTabHTML += "<div id=\"myPetsTabPetImage\" class='genericPetImage'></div>";
+	myPetsTabHTML += "</div>";
+	myPetsTabHTML += "<div style='float:left;margin-top:10px;'>";
+	myPetsTabHTML += "<div id=\"myPetsTabReleasePet\" class='actionButton' onclick='myPetsTabReleasePet();'>Release Pet</div></div>";
+	myPetsTabHTML += "</div><div class=\"clearer\"></div>";
+	myPetsTabHTML += "<div style='width:180px;margin:8px auto;position:relative;left:-10px;'>";
+	myPetsTabHTML += "<div style='float:left;'>Exp:&nbsp;</div>";
+	myPetsTabHTML += "<div style='float:left; width:128px;height:16px;background:#000000;'>"
+	myPetsTabHTML += "<div id='myPetsTabPetEXP' style='width:100px;height:14px;background:#00ff00;margin:1px;'></div>";
+	myPetsTabHTML += "</div></div>";
+	myPetsTabHTML += "<div class=\"clearer\"></div>";
+	myPetsTabHTML += "<div id='moodContainer' style='width:200px;margin:8px auto;position:relative;left:-14px;'>";
+	myPetsTabHTML += "<div style='float:left;'>Mood:&nbsp;</div>";
+	myPetsTabHTML += "<div style='float:left; width:128px; height:16px;background:#000000;'>";
+	myPetsTabHTML += "<div id='myPetsTabPetMood' style='width:100px;height:14px;background:#ff00ff;margin:1px;'></div></div>";
+	myPetsTabHTML += "<div class=\"clearer\"></div></div><br/>";
+	myPetsTabHTML += "<div id=\"myPetsTabPetDescription\" style=\"height:32px;\">It moves around a lot.<br/>It must be close to hatching!</div><br/></div>";
+	myPetsTabHTML += "<div id='talkToPetContainer' style='width:350px; position:absolute; bottom:10px; left:30%; right:30%;'>";
+	myPetsTabHTML += "<input id='myPetsTabTalkBox' style='width:200px;float:left;margin-top:10px;' type='text' onKeyPress='myPetsTabTalkEnter(event);' />";
+	myPetsTabHTML += "<div class='actionButton' style='float:left;' onclick='myPetsTabTalk();'>Say Something</div>";
+	myPetsTabHTML += "</div>";
+	
+	body.innerHTML = myPetsTabHTML;
+}
+
+
 
 var myPetsTabSelectedTab;
 var myPetsTabUpdate;
